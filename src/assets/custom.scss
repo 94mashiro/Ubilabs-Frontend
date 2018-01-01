@@ -1,0 +1,28 @@
+.forum-editor.markdown-editor>.editor-toolbar {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+.editor-title-input .el-input__inner {
+  border-radius: 0;
+  border-bottom: 0;
+
+  &:hover, &:active, &:focus {
+    border: 1px solid #ddd;
+  }
+}
+
+.el-loading-mask {
+  background-color: #fff !important;
+  z-index: 1500 !important;
+}
+
+.answer-comment-dialog {
+  .el-dialog__header {
+    padding: 15px 15px 0;
+  }
+
+  .el-dialog__body {
+    padding: 10px 20px;
+  }
+}
