@@ -1,6 +1,6 @@
 <template>
 <div class="activity-detail-header-wrapper">
-  <div class="header-carousel">
+  <div class="header-carousel" v-if="activity.imageUrls.length > 0">
     <el-carousel trigger="click" width="500px">
       <el-carousel-item v-for="imageUrl in activity.imageUrls" :key="imageUrl">
         <div class="carousel-image-hover">

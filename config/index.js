@@ -59,6 +59,13 @@ module.exports = {
         pathRewrite: {
           '^/imageupload': '/'
         }
+      },
+      '/archive/gitbook': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/archive/gitbook': '/gitbook'
+        }
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

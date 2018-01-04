@@ -4,13 +4,10 @@
       <el-col :span="4" class="nav-brand">
         <img src="http://via.placeholder.com/146x38?text=logo" alt="Ubilabs Logo">
       </el-col>
-      <!-- <el-col class="nav-brand" :span="4">
-        <el-input size="small" v-model="search" placeholder="请输入内容"></el-input>
-      </el-col> -->
       <el-col :span="20">
         <el-menu class="nav" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="2">项目</el-menu-item>
-          <el-menu-item index="3-1">CodeLabs</el-menu-item>
+          <el-menu-item index="">项目</el-menu-item>
+          <el-menu-item index="codelabs">CodeLabs</el-menu-item>
           <el-menu-item index="forum">论坛</el-menu-item>
           <el-menu-item index="activity">活动</el-menu-item>
           <el-menu-item index="content-us">联系我们</el-menu-item>

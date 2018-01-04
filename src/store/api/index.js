@@ -154,3 +154,35 @@ export const getActivity = (params) => {
       return res.data
     })
 }
+
+export const postCodelab = (data) => {
+  return axios.post(
+    '/api/codelabs',
+    data
+    // headers: {'content-type': 'multipart/form-data'}
+  ).then(res => {
+    return res.data
+  })
+}
+
+export const getCodelabs = (params) => {
+  const paramsArr = []
+  for (let key in params) {
+    paramsArr.push(`${key}=${params[key]}`)
+  }
+  const paramsStr = `${paramsArr.join('&')}`
+  const fetchUrl = params ? `/api/codelabs?${paramsStr}` : `/api/codelabs/`
+  return axios.get(fetchUrl)
+    .then(res => {
+      return res.data
+    })
+}
+
+export const postProject = (data) => {
+  return axios.post(
+    '/api/project',
+    data
+  ).then(res => {
+    return res.data
+  })
+}

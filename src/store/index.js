@@ -7,6 +7,8 @@ import question from './modules/question'
 import forum from './modules/forum'
 import article from './modules/article'
 import activity from './modules/activity'
+import codelabs from './modules/codelabs'
+import project from './modules/project'
 
 Vue.use(Vuex)
 
@@ -19,7 +21,9 @@ export default new Vuex.Store({
     question,
     forum,
     article,
-    activity
+    activity,
+    codelabs,
+    project
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

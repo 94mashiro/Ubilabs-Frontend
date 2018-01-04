@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Store from '@/store'
 
-import HelloWorld from '@/components/HelloWorld'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Setting from '@/pages/Setting'
@@ -12,14 +11,16 @@ import Article from '@/pages/Article'
 import Question from '@/pages/Question'
 import Activity from '@/pages/Activity'
 import ActivityDetail from '@/pages/ActivityDetail'
+import Codelabs from '@/pages/Codelabs'
+import Project from '@/pages/Project'
 
 Vue.use(Router)
 
 const routes = [
   {
     path: '/',
-    name: 'Hello',
-    component: HelloWorld
+    name: 'Project',
+    component: Project
   },
   {
     path: '/login',
@@ -71,6 +72,11 @@ const routes = [
     name: 'ActivityDetail',
     component: ActivityDetail,
     meta: { isWhiteBackground: true }
+  },
+  {
+    path: '/codelabs',
+    name: 'Codelabs',
+    component: Codelabs
   }
 ]
 
