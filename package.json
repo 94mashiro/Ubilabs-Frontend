@@ -13,13 +13,17 @@
   "dependencies": {
     "@date/today": "^0.1.0",
     "axios": "^0.17.0",
+    "calendar-heatmap-mini": "^1.2.0",
+    "contributions-chart": "^1.0.3",
     "element-ui": "^2.0.8",
     "github-markdown-css": "^2.9.0",
     "moment": "^2.20.1",
     "promise.prototype.finally": "^3.1.0",
+    "skeleton-card-vuejs": "^0.0.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue-simplemde": "^0.4.6",
+    "vuejs-heatmap": "^1.0.1",
     "vuex": "^3.0.0",
     "yue.css": "^0.4.0"
   },

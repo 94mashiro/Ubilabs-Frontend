@@ -3,7 +3,7 @@
   <el-card>
     <div class="card-flex-wrapper">
       <div class="codelab-title">
-        <a :href="gitbookUrl">{{title}}</a>
+        <a :href="gitbookUrl" target="_blank">{{title}}</a>
       </div>
       <div class="codelab-node">
         <span>{{codelab.node.name}}</span>

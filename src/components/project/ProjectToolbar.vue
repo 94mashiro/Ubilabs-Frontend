@@ -18,6 +18,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.project-toolbar-wrapper {
+  margin-bottom: 20px;
+}
 .create-button {
   padding: 0 !important;
 }

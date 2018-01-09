@@ -10,6 +10,11 @@
     <el-form-item label="项目简介">
       <el-input v-model="postBody.description" placeholder="一句话来介绍你的项目吧"></el-input>
     </el-form-item>
+    <el-form-item label="项目技术">
+      <el-select v-model="postBody.node" filterable multiple placeholder="请选择">
+        <el-option v-for="node in nodeList" :key="node.value" :label="node.label" :value="node.value"></el-option>
+      </el-select>
+    </el-form-item>
     <el-form-item label="项目图片">
       <image-uploader></image-uploader>
     </el-form-item>
@@ -22,7 +27,7 @@
 
 <script>
 import ImageUploader from '@/components/ImageUploader'
-import { postProject } from '@/store/api'
+import { postProject, getNodes } from '@/store/api'
 export default {
   name: 'projectCreateDialog',
   components: {
@@ -30,11 +35,13 @@ export default {
   },
   data () {
     return {
+      nodeList: [],
       postBody: {
         title: '',
         gitTitle: '',
         description: '',
-        imageUrls: []
+        imageUrls: [],
+        node: []
       }
     }
   },
@@ -54,6 +61,17 @@ export default {
         console.error(err)
       })
     }
+  },
+  created () {
+    getNodes().then((results) => {
+      if (results.success) {
+        this.nodeList = results.nodes.map(node => {
+          return { value: node._id, label: node.name }
+        })
+      } else {
+        throw new Error(results.message)
+      }
+    })
   }
 }
 </script>

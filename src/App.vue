@@ -36,7 +36,8 @@ export default {
 @import '~simplemde/dist/simplemde.min.css';
 @import '~github-markdown-css/github-markdown.css';
 body {
-  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 #app {
   font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;

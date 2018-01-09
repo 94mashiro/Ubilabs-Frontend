@@ -2,13 +2,14 @@
 <el-container class="container">
   <el-main>
     <project-toolbar v-if="isLogin"></project-toolbar>
+    <project-card-list :list="projects"></project-card-list>
   </el-main>
   <el-aside width="280px">
     <el-main>
 45667
     </el-main>
   </el-aside>
-  <el-dialog title="创建新项目" :visible.sync="isCreateDialogVisible">
+  <el-dialog title="创建新项目" :visible.sync="isCreateDialogVisible" top="10vh">
     <project-create-dialog></project-create-dialog>
   </el-dialog>
 </el-container>
@@ -17,12 +18,14 @@
 <script>
 import ProjectToolbar from '@/components/project/ProjectToolbar'
 import ProjectCreateDialog from '@/components/project/ProjectCreateDialog'
+import ProjectCardList from '@/components/project/ProjectCardList'
 import { mapGetters } from 'vuex'
 export default {
   name: 'project',
   components: {
     ProjectToolbar,
-    ProjectCreateDialog
+    ProjectCreateDialog,
+    ProjectCardList
   },
   computed: {
     isCreateDialogVisible: {
@@ -34,8 +37,12 @@ export default {
       }
     },
     ...mapGetters({
-      isLogin: 'status/isLogin'
+      isLogin: 'status/isLogin',
+      projects: 'project/projects'
     })
+  },
+  created () {
+    this.$store.dispatch('project/getProjects')
   }
 }
 </script>

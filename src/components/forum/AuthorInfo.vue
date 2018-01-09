@@ -64,7 +64,7 @@ export default {
 
 .author-avatar-wrapper {
   background: #fff;
-  border-radius: 2px;
+  border-radius: 5px;
 }
 
 .answer-editor-header {

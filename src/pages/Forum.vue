@@ -3,7 +3,7 @@
     <el-container>
       <el-main>
         <toolbar></toolbar>
-        <card-list v-loading="isLoadingList"></card-list>
+        <card-list v-loading="isLoadingList" element-loading-background="#ffffff"></card-list>
       </el-main>
     </el-container>
     <el-aside width="280px" v-if="displayMode==='question'">

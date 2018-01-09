@@ -13,6 +13,7 @@ import Activity from '@/pages/Activity'
 import ActivityDetail from '@/pages/ActivityDetail'
 import Codelabs from '@/pages/Codelabs'
 import Project from '@/pages/Project'
+import ProjectDetail from '@/pages/ProjectDetail'
 
 Vue.use(Router)
 
@@ -77,6 +78,11 @@ const routes = [
     path: '/codelabs',
     name: 'Codelabs',
     component: Codelabs
+  },
+  {
+    path: '/project/:id',
+    name: 'ProjectDetail',
+    component: ProjectDetail
   }
 ]
 

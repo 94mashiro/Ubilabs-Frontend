@@ -1,5 +1,5 @@
 <template>
-  <el-container class="container" v-loading="isLoading">
+  <el-container class="container" v-loading="isLoading" element-loading-background="#f3f3f3">
     <el-header>
       <filter-toolbar></filter-toolbar>
     </el-header>

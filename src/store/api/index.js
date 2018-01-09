@@ -186,3 +186,31 @@ export const postProject = (data) => {
     return res.data
   })
 }
+
+export const getProject = (params) => {
+  const paramsArr = []
+  for (let key in params) {
+    paramsArr.push(`${key}=${params[key]}`)
+  }
+  const paramsStr = `${paramsArr.join('&')}`
+  const fetchUrl = params ? `/api/project?${paramsStr}` : `/api/project/`
+  return axios.get(fetchUrl)
+    .then(res => {
+      return res.data
+    })
+}
+
+export const updateSSHKey = (token, body) => {
+  return axios.post(
+    'http://localhost:32774/api/v4/user/keys',
+    body,
+    {
+      headers: { 'PRIVATE-TOKEN': token },
+      validateStatus: function (status) {
+        return true
+      }
+    }
+  ).then(res => {
+    return res.data
+  })
+}
