@@ -1,19 +1,17 @@
 <template>
   <div class="project-detail-member-wrapper">
+    <project-detail-add-member-dialog></project-detail-add-member-dialog>
     <div class="project-leader-toolbar">
       <div class="member-rank"><icon name="people_fill" :scale="2" class="icon"></icon>项目负责人</div>
     </div>
     <project-detail-member-card :isLeader="true" :member="project.leader"></project-detail-member-card>
     <div class="project-member-toolbar">
       <div class="member-rank"><icon name="group_fill" :scale="2" class="icon"></icon>项目组成员</div>
-      <el-button type="primary" size="small" round icon="el-icon-circle-plus" @click="showAddMemberDialog">添加成员</el-button>
+      <el-button type="primary" size="small" round icon="el-icon-circle-plus" @click="showAddMemberDialog" v-if="project.leader._id === profile._id">添加成员</el-button>
     </div>
     <div v-for="member in project.member" :key="member._id">
       <project-detail-member-card :isLeader="false" :member="member"></project-detail-member-card>
     </div>
-    <el-dialog title="添加项目组成员" :visible.sync="isAddMemberDialogVisible">
-      <project-detail-add-member-dialog></project-detail-add-member-dialog>
-    </el-dialog>
   </div>
 </template>
 
@@ -29,7 +27,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      project: 'project/project'
+      project: 'project/project',
+      profile: 'user/profile'
     }),
     isAddMemberDialogVisible: {
       get: function () {

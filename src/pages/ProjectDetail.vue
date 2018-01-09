@@ -1,17 +1,17 @@
 <template>
 <div class="project-detail-wrapper">
-  <el-tabs type="border-card"  v-if="!isLoadingProject">
-    <el-tab-pane label="项目介绍">
+  <el-tabs v-model="selectedTab" type="border-card"  v-if="!isLoadingProject" @tab-click="handleClick">
+    <el-tab-pane name="intro" label="项目介绍">
       <project-detail-intro></project-detail-intro>
     </el-tab-pane>
-    <el-tab-pane label="项目代码">
+    <el-tab-pane name="git" label="项目代码">
       <project-detail-git></project-detail-git>
     </el-tab-pane>
-    <el-tab-pane label="项目成员">
+    <el-tab-pane name="member" label="项目成员">
       <project-detail-member></project-detail-member>
     </el-tab-pane>
-    <el-tab-pane label="项目笔记"></el-tab-pane>
-    <el-tab-pane label="项目管理" v-if="isLogin && project.leader._id === profile._id"></el-tab-pane>
+    <el-tab-pane name="note" label="项目笔记"></el-tab-pane>
+    <el-tab-pane name="admin" label="项目管理" v-if="isLogin && project.leader._id === profile._id"></el-tab-pane>
   </el-tabs>
 </div>
 </template>
@@ -28,14 +28,26 @@ export default {
     ProjectDetailGit,
     ProjectDetailMember
   },
-  computed: mapGetters({
-    isLoadingProject: 'project/isLoadingProject',
-    project: 'project/project',
-    profile: 'user/profile',
-    isLogin: 'status/isLogin'
-  }),
+  data () {
+    return {
+      selectedTab: this.$route.params.tab || 'intro'
+    }
+  },
+  computed: {
+    ...mapGetters({
+      isLoadingProject: 'project/isLoadingProject',
+      project: 'project/project',
+      profile: 'user/profile',
+      isLogin: 'status/isLogin'
+    })
+  },
   created () {
     this.$store.dispatch('project/getProject', { projectId: this.$route.params.id })
+  },
+  methods: {
+    handleClick: function ({name}) {
+      this.$router.push(`/project/${this.project._id}/${name}`)
+    }
   }
 }
 </script>

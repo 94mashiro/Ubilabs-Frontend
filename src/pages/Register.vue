@@ -33,7 +33,7 @@ export default {
   name: 'register',
   data () {
     const passwordValidRule = (rule, value, callback) => {
-      if (value !== this.registerForm.password) {
+      if (value !== this.registerForm.password || value === '') {
         callback(new Error('两次密码输入不一致'))
       } else {
         callback()
@@ -51,8 +51,7 @@ export default {
           { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
         email: [
-          { required: true, message: '请输入邮箱', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur, change' }
+          { type: 'email', required: true, message: '请输入正确的邮箱格式', trigger: 'blur, change' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },

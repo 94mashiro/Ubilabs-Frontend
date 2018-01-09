@@ -214,3 +214,25 @@ export const updateSSHKey = (token, body) => {
     return res.data
   })
 }
+
+export const getProfile = (params) => {
+  const paramsArr = []
+  for (let key in params) {
+    paramsArr.push(`${key}=${params[key]}`)
+  }
+  const paramsStr = `${paramsArr.join('&')}`
+  const fetchUrl = params ? `/api/user/profile?${paramsStr}` : `/api/user/profile/`
+  return axios.get(fetchUrl)
+    .then(res => {
+      return res.data
+    })
+}
+
+export const postMember = (data) => {
+  return axios.post(
+    '/api/project/member',
+    data
+  ).then(res => {
+    return res.data
+  })
+}

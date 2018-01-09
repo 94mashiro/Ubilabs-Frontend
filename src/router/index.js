@@ -83,6 +83,11 @@ const routes = [
     path: '/project/:id',
     name: 'ProjectDetail',
     component: ProjectDetail
+  },
+  {
+    path: '/project/:id/:tab',
+    name: 'ProjectDetail',
+    component: ProjectDetail
   }
 ]
 
