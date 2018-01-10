@@ -21,7 +21,7 @@
     </el-alert>
     <el-form status-icon :model="postBody" :rules="formRules" ref="ruleForm">
       <el-form-item prop="email">
-        <el-input v-model="postBody.email" placeholder="请输入用户的Email"></el-input>
+        <el-input v-model="postBody.email" placeholder="请输入用户的Email" @keyup.enter.native="verifyEmail"></el-input>
       </el-form-item>
     </el-form>
     <div class="dialog-footer" slot="footer"><el-button type="primary" size="small" @click="verifyEmail">添加</el-button></div>

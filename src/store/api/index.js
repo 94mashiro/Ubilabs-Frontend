@@ -44,8 +44,14 @@ export const getQuestions = (params) => {
     })
 }
 
-export const getArticles = () => {
-  return axios.get('/api/forum/articles')
+export const getArticles = (params) => {
+  const paramsArr = []
+  for (let key in params) {
+    paramsArr.push(`${key}=${params[key]}`)
+  }
+  const paramsStr = `${paramsArr.join('&')}`
+  const fetchUrl = params ? `/api/forum/articles?${paramsStr}` : `/api/forum/articles`
+  return axios.get(fetchUrl)
     .then((res) => {
       return res.data
     })
@@ -231,6 +237,28 @@ export const getProfile = (params) => {
 export const postMember = (data) => {
   return axios.post(
     '/api/project/member',
+    data
+  ).then(res => {
+    return res.data
+  })
+}
+
+export const getProjectNotes = (params) => {
+  const paramsArr = []
+  for (let key in params) {
+    paramsArr.push(`${key}=${params[key]}`)
+  }
+  const paramsStr = `${paramsArr.join('&')}`
+  const fetchUrl = params ? `/api/project/note?${paramsStr}` : `/api/project/note/`
+  return axios.get(fetchUrl)
+    .then(res => {
+      return res.data
+    })
+}
+
+export const postProjectNote = (data) => {
+  return axios.post(
+    '/api/project/note',
     data
   ).then(res => {
     return res.data

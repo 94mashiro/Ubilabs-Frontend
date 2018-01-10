@@ -73,7 +73,7 @@ const actions = {
     api.getArticles()
       .then(body => {
         if (body.success) {
-          commit(types.FORUM_SET_ARTICLES, body.articles)
+          commit(types.FORUM_SET_ARTICLES, body.result)
         } else {
           console.error(body.message)
         }

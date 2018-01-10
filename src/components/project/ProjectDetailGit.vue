@@ -1,7 +1,7 @@
 <template>
 <div class="project-detail-git-wrapper">
 <div class="git-sshlink" v-if="isLogin && isProjectMemeber">
-  <el-alert type="success" title="SSH链接" :description="project.gitSSH" show-icon :closable="false" v-if="profile.gitlabSSHKey"></el-alert>
+  <el-alert type="info" title="SSH链接" :description="project.gitSSH" show-icon :closable="false" v-if="profile.gitlabSSHKey"></el-alert>
   <el-alert type="error" title="SSH链接" show-icon :closable="false" v-if="!profile.gitlabSSHKey">
     <p class="el-alert__description">
       您需要在<router-link to="/setting" class="nav-link">个人设置</router-link>中绑定<router-link to="/setting" class="nav-link">SSH Key</router-link>之后才能查看项目的SSH链接。
@@ -29,7 +29,7 @@ export default {
           return true
         } else {
           for (let member of this.project.member) {
-            if (this.profile._id === member.id) {
+            if (this.profile._id === member._id) {
               return true
             }
           }

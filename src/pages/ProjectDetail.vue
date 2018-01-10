@@ -10,7 +10,9 @@
     <el-tab-pane name="member" label="项目成员">
       <project-detail-member></project-detail-member>
     </el-tab-pane>
-    <el-tab-pane name="note" label="项目笔记"></el-tab-pane>
+    <el-tab-pane name="note" label="项目笔记">
+      <project-detail-note></project-detail-note>
+    </el-tab-pane>
     <el-tab-pane name="admin" label="项目管理" v-if="isLogin && project.leader._id === profile._id"></el-tab-pane>
   </el-tabs>
 </div>
@@ -20,13 +22,15 @@
 import ProjectDetailIntro from '@/components/project/ProjectDetailIntro'
 import ProjectDetailGit from '@/components/project/ProjectDetailGit'
 import ProjectDetailMember from '@/components/project/ProjectDetailMember'
+import ProjectDetailNote from '@/components/project/ProjectDetailNote'
 import { mapGetters } from 'vuex'
 export default {
   name: 'projectDetail',
   components: {
     ProjectDetailIntro,
     ProjectDetailGit,
-    ProjectDetailMember
+    ProjectDetailMember,
+    ProjectDetailNote
   },
   data () {
     return {

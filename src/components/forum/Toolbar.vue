@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isQuestionDialogVisible: 'status/isQuestionDialogVisible',
+      isQuestionDialogVisible: 'forum/isQuestionDialogVisible',
       isLogin: 'status/isLogin'
     }),
     displayMode: {
@@ -61,7 +61,7 @@ export default {
         this.$router.push('/login')
         return
       }
-      this.$store.dispatch('status/setIsQuestionDialogVisible', { isQuestionDialogVisible: true })
+      this.$store.dispatch('forum/setIsQuestionDialogVisible', { isQuestionDialogVisible: true })
     },
     navigateToArticle () {
       this.$router.push('/forum/editor')
