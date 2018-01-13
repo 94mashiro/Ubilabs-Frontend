@@ -2,13 +2,15 @@
 <div class="project-detail-note-wrapper">
   <project-detail-add-note-dialog v-if="isLogin"></project-detail-add-note-dialog>
   <div class="note-list-header">
-    <span>本项目共有 {{projectNotes.length}} 篇项目笔记</span>
+    <span>本项目共有 {{project.notes.length}} 篇项目笔记</span>
     <el-button type="primary" size="mini" icon="el-icon-edit" @click="showDialog" v-if="isLogin">添加笔记</el-button>
   </div>
   <div class="note-list">
-    <div class="list-item" v-for="note in projectNotes" :key="note._id">
-      <div class="note-title"><router-link :to="getNoteLink(note)">{{note.article.title}}</router-link></div>
-      <div class="note-author">{{note.author.name}}</div>
+    <div v-for="note in project.notes" :key="note._id" class="list-item">
+      <div class="card-wrapper">
+        <div class="note-title"><router-link :to="getNoteLink(note)">{{note.article.title}}</router-link></div>
+        <div class="note-author">{{note.author.name}}</div>
+      </div>
     </div>
   </div>
 </div>
@@ -25,7 +27,7 @@ export default {
   computed: {
     ...mapGetters({
       isLogin: 'status/isLogin',
-      projectNotes: 'project/projectNotes'
+      project: 'project/project'
     })
   },
   methods: {
@@ -44,20 +46,28 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e4e7ed;
+  padding-bottom: 10px;
 
   span {
-    line-height: 1.7;
+    line-height: 2;
   }
 }
-.list-item {
+
+.card-wrapper {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  padding: 5px 20px;
 
   .note-title {
     font-size: 25px;
     font-weight: 600;
+    width: 800px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
     a {
       color: #333;
       text-decoration: none;
@@ -66,7 +76,7 @@ export default {
 
   .note-author {
     color: #666;
-    line-height: 1.3;
+    line-height: 2;
   }
 }
 </style>

@@ -65,7 +65,7 @@ export default {
   created () {
     getNodes().then((results) => {
       if (results.success) {
-        this.nodeList = results.nodes.map(node => {
+        this.nodeList = results.result.map(node => {
           return { value: node._id, label: node.name }
         })
       } else {

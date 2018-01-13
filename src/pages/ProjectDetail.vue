@@ -4,6 +4,8 @@
     <el-tab-pane name="intro" label="项目介绍">
       <project-detail-intro></project-detail-intro>
     </el-tab-pane>
+    <el-tab-pane name="progress" label="项目进度">
+    </el-tab-pane>
     <el-tab-pane name="git" label="项目代码">
       <project-detail-git></project-detail-git>
     </el-tab-pane>
@@ -13,7 +15,9 @@
     <el-tab-pane name="note" label="项目笔记">
       <project-detail-note></project-detail-note>
     </el-tab-pane>
-    <el-tab-pane name="admin" label="项目管理" v-if="isLogin && project.leader._id === profile._id"></el-tab-pane>
+    <el-tab-pane name="settings" label="项目管理" v-if="isLogin && project.leader._id === profile._id">
+      <project-detail-settings></project-detail-settings>
+    </el-tab-pane>
   </el-tabs>
 </div>
 </template>
@@ -23,6 +27,7 @@ import ProjectDetailIntro from '@/components/project/ProjectDetailIntro'
 import ProjectDetailGit from '@/components/project/ProjectDetailGit'
 import ProjectDetailMember from '@/components/project/ProjectDetailMember'
 import ProjectDetailNote from '@/components/project/ProjectDetailNote'
+import ProjectDetailSettings from '@/components/project/ProjectDetailSettings'
 import { mapGetters } from 'vuex'
 export default {
   name: 'projectDetail',
@@ -30,7 +35,8 @@ export default {
     ProjectDetailIntro,
     ProjectDetailGit,
     ProjectDetailMember,
-    ProjectDetailNote
+    ProjectDetailNote,
+    ProjectDetailSettings
   },
   data () {
     return {

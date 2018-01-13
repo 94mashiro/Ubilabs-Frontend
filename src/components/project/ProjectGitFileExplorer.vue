@@ -33,13 +33,17 @@ export default {
   props: ['repoId'],
   computed: {
     sortedFiles: function () {
-      return this.files.slice(0).sort((a, b) => {
-        if (a.type !== b.type) {
-          return a.type === 'tree' ? -1 : 1
-        } else {
-          return a.name < b.name ? -1 : 1
-        }
-      })
+      if (this.files.length > 0) {
+        return this.files.slice(0).sort((a, b) => {
+          if (a.type !== b.type) {
+            return a.type === 'tree' ? -1 : 1
+          } else {
+            return a.name < b.name ? -1 : 1
+          }
+        })
+      } else {
+        return []
+      }
     }
   },
   methods: {

@@ -17,10 +17,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      projectNotes: 'project/projectNotes'
+      project: 'project/project'
     }),
     notes: function () {
-      return this.projectNotes.filter(note => note.author._id === this.member._id)
+      return this.project.notes.filter(note => note.author._id === this.member._id)
     },
     chartData: function () {
       const table = {}
@@ -49,7 +49,7 @@ export default {
       const chart = CalendarHeatMap()
               .data(this.chartData)
               .selector(`#chart-${this.member._id.substring(0, 5)}`)
-              .colorRange(['#D8E6E7', '#218380'])
+              .colorRange(['#EBEDF0', '#1D602A'])
               .tooltipEnabled(true)
               .legendEnabled(false)
       chart()

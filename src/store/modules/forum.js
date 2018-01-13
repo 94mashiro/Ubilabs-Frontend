@@ -36,12 +36,12 @@ const actions = {
     try {
       const body = await api.getNodes()
       if (body.success) {
-        commit(types.FORUM_SET_QUESTIONNODES, body.nodes)
+        commit(types.FORUM_SET_QUESTIONNODES, body.result)
       } else {
-        console.error(body.message)
+        throw body.message
       }
     } catch (err) {
-      console.error(err)
+      console.error(err.message || err)
     } finally {
       commit(types.FORUM_SET_ISLOADINGQUESTIONNODES, false)
     }

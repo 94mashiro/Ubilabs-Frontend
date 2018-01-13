@@ -18,7 +18,7 @@
     </div>
     <div class="project-story">
       <span>项目故事版:</span>
-      <div class="markdown-body" v-html="project.story.html" v-if="project.story"></div>
+      <div class="markdown-body project-story-markdown" v-html="project.story.html" v-if="project.story"></div>
       <span v-if="!project.story">暂无</span>
     </div>
   </div>
@@ -65,6 +65,12 @@ export default {
     font-size: 18px;
     margin-bottom: 15px;
     color: #333;
+  }
+
+  .project-story-markdown {
+    font-size: 14px;
+    width: 90%;
+    margin: 10px auto 0;
   }
 }
 

@@ -9,6 +9,7 @@ const state = {
   isLoadingProject: false,
   isAddMemberDialogVisible: false,
   isAddNoteDialogVisible: false,
+  isAddMilestoneDialogVisible: false,
   projectNotes: []
 }
 
@@ -20,7 +21,8 @@ const getters = {
   projects: state => state.projects,
   isAddMemberDialogVisible: state => state.isAddMemberDialogVisible,
   isAddNoteDialogVisible: state => state.isAddNoteDialogVisible,
-  projectNotes: state => state.projectNotes
+  projectNotes: state => state.projectNotes,
+  isAddMilestoneDialogVisible: state => state.isAddMilestoneDialogVisible
 }
 
 const actions = {
@@ -53,9 +55,11 @@ const actions = {
     try {
       const projectBody = await api.getProject({ id: projectId })
       const notesBody = await api.getProjectNotes({ project_id: projectId })
-      if (projectBody.success && notesBody.success) {
+      const milestonesBody = await api.getProjectMilestones({ project_id: projectId })
+      if (projectBody.success && notesBody.success && milestonesBody.success) {
         commit(types.PROJECT_SET_PROJECT, projectBody.result)
         dispatch('setProjectNotes', { projectNotes: notesBody.result })
+        dispatch('setProjectMilestones', { projectMilestones: milestonesBody.result })
       }
     } catch (err) {
       console.error(err)
@@ -71,6 +75,12 @@ const actions = {
   },
   setProjectNotes: ({ commit }, { projectNotes }) => {
     commit(types.PROJECT_SET_PROJECTNOTES, projectNotes)
+  },
+  setIsAddMilestoneDialogVisible: ({ commit }, { isAddMilestoneDialogVisible }) => {
+    commit(types.PROJECT_SET_ISADDMILESTONEDIALOGVISIBLE, isAddMilestoneDialogVisible)
+  },
+  setProjectMilestones: ({ commit }, { projectMilestones }) => {
+    commit(types.PROJECT_SET_PROJECTMILESTONES, projectMilestones)
   }
 }
 
@@ -97,7 +107,13 @@ const mutations = {
     state.isAddNoteDialogVisible = isAddNoteDialogVisible
   },
   [types.PROJECT_SET_PROJECTNOTES]: (state, projectNotes) => {
-    state.projectNotes = projectNotes
+    state.project.notes = projectNotes
+  },
+  [types.PROJECT_SET_ISADDMILESTONEDIALOGVISIBLE]: (state, isAddMilestoneDialogVisible) => {
+    state.isAddMilestoneDialogVisible = isAddMilestoneDialogVisible
+  },
+  [types.PROJECT_SET_PROJECTMILESTONES]: (state, projectMilestones) => {
+    state.project.milestones = projectMilestones
   }
 }
 

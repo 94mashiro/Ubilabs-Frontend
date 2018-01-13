@@ -264,3 +264,49 @@ export const postProjectNote = (data) => {
     return res.data
   })
 }
+
+export const patchProject = (data) => {
+  return axios.patch(
+    '/api/project',
+    data
+  ).then(res => {
+    return res.data
+  })
+}
+
+export const deleteProjectMember = (params) => {
+  const paramsArr = []
+  for (let key in params) {
+    paramsArr.push(`${key}=${params[key]}`)
+  }
+  const paramsStr = `${paramsArr.join('&')}`
+  const fetchUrl = params ? `/api/project/member?${paramsStr}` : `/api/project/member/`
+  return axios.delete(
+    fetchUrl
+  ).then(res => {
+    return res.data
+  })
+}
+
+export const postProjectMilestone = (data) => {
+  return axios.post(
+    '/api/project/milestone',
+    data
+  ).then(res => {
+    return res.data
+  })
+}
+
+export const getProjectMilestones = (params) => {
+  const paramsArr = []
+  for (let key in params) {
+    paramsArr.push(`${key}=${params[key]}`)
+  }
+  const paramsStr = `${paramsArr.join('&')}`
+  const fetchUrl = params ? `/api/project/milestone?${paramsStr}` : `/api/project/milestone/`
+  return axios.get(
+    fetchUrl
+  ).then(res => {
+    return res.data
+  })
+}

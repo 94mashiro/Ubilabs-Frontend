@@ -81,8 +81,7 @@ const routes = [
   },
   {
     path: '/project/:id',
-    name: 'ProjectDetail',
-    component: ProjectDetail
+    redirect: '/project/:id/intro'
   },
   {
     path: '/project/:id/:tab',

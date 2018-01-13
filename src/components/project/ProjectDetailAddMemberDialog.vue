@@ -1,6 +1,6 @@
 <template>
 <div class="add-member-wrapper">
-  <el-dialog title="添加项目组成员" :visible.sync="isAddMemberDialogVisible">
+  <el-dialog title="添加项目组成员" :visible.sync="isAddMemberDialogVisible" @open="handleOpenDialog">
     <el-dialog title="确认用户信息" :visible.sync="showInsideDialog" :append-to-body="true" width="30%">
       <div class="comfirm-addMember" :key="addMember._id">
         <span>你确定添加用户&nbsp;</span><author-info :author="addMember" :mini="true" :avatarSize="20"></author-info><span>&nbsp;吗？</span>
@@ -19,9 +19,9 @@
       class="dialog-alart"
     >
     </el-alert>
-    <el-form status-icon :model="postBody" :rules="formRules" ref="ruleForm">
-      <el-form-item prop="email">
-        <el-input v-model="postBody.email" placeholder="请输入用户的Email" @keyup.enter.native="verifyEmail"></el-input>
+    <el-form status-icon :model="postBody" :rules="formRules" ref="ruleForm" @submit.native.prevent>
+      <el-form-item prop="email" :inline-message="true">
+        <el-input v-model="postBody.email" placeholder="请输入用户的Email"></el-input>
       </el-form-item>
     </el-form>
     <div class="dialog-footer" slot="footer"><el-button type="primary" size="small" @click="verifyEmail">添加</el-button></div>
@@ -53,7 +53,8 @@ export default {
       addMember: {},
       formRules: {
         email: [
-          { required: true, type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur, change' }
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: 'change' },
+          { required: true, message: '请输入正确的邮箱地址', trigger: 'change' }
         ]
       }
     }
@@ -120,8 +121,6 @@ export default {
         if (body.success) {
           this.showInsideDialog = false
           this.isAddMemberDialogVisible = false
-          this.showError = false
-          this.errorMessage = ''
           await sleep(1000)
           this.$store.dispatch('project/getProject', { projectId: this.$route.params.id })
           this.$message.success('添加项目组成员成功')
@@ -131,6 +130,11 @@ export default {
       } catch (err) {
         console.error(err)
       }
+    },
+    handleOpenDialog: function () {
+      this.showError = false
+      this.errorMessage = ''
+      this.postBody.email = ''
     }
   }
 }

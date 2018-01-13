@@ -7,7 +7,6 @@
     <project-detail-member-card :isLeader="true" :member="project.leader"></project-detail-member-card>
     <div class="project-member-toolbar">
       <div class="member-rank"><icon name="group_fill" :scale="2" class="icon"></icon>项目组成员</div>
-      <el-button type="primary" size="small" round icon="el-icon-circle-plus" @click="showAddMemberDialog" v-if="isLogin && project.leader._id === profile._id">添加成员</el-button>
     </div>
     <div v-for="member in project.member" :key="member._id">
       <project-detail-member-card :isLeader="false" :member="member"></project-detail-member-card>
@@ -43,22 +42,6 @@ export default {
   methods: {
     showAddMemberDialog: function () {
       this.isAddMemberDialogVisible = true
-    }
-  },
-  data () {
-    return {
-      contributions: [
-        {
-          date: '2018-03-04',
-          value: 3
-        }
-      ],
-      contributions2: [
-        {
-          date: '2018-03-04',
-          value: 3
-        }
-      ]
     }
   }
 }

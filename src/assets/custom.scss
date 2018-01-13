@@ -3,6 +3,11 @@
   border-top-right-radius: 0 !important;
 }
 
+.markdown-editor .CodeMirror {
+  line-height: 1;
+  height: 200px !important;
+}
+
 .editor-title-input .el-input__inner {
   border-radius: 0;
   border-bottom: 0;
@@ -13,7 +18,6 @@
 }
 
 .el-loading-mask {
-  // background-color: #fff !important;
   z-index: 1500 !important;
 }
 

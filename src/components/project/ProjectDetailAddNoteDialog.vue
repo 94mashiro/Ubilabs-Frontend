@@ -27,8 +27,7 @@ export default {
     ...mapGetters({
       profile: 'user/profile',
       project: 'project/project',
-      isLogin: 'status/isLogin',
-      projectNotes: 'project/projectNotes'
+      isLogin: 'status/isLogin'
     })
   },
   data () {
@@ -43,21 +42,17 @@ export default {
   async created () {
     try {
       const userArticles = await getArticles({ user_id: this.profile._id })
-      if (!userArticles.success) {
-        throw userArticles.message
-      } else {
-        this.articles = userArticles.result.filter(article => {
-          for (let note of this.projectNotes) {
-            if (note.article._id === article._id) return false
-          }
-          return true
-        }).map(article => {
-          return {
-            value: article._id,
-            label: article.title
-          }
-        })
-      }
+      this.articles = userArticles.result.filter(article => {
+        for (let note of this.project.notes) {
+          if (note.article._id === article._id) return false
+        }
+        return true
+      }).map(article => {
+        return {
+          value: article._id,
+          label: article.title
+        }
+      })
     } catch (err) {
       this.$message.error(err.message || err)
     }

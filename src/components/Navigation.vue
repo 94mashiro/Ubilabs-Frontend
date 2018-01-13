@@ -5,7 +5,7 @@
         <img src="http://via.placeholder.com/146x38?text=logo" alt="Ubilabs Logo">
       </el-col>
       <el-col :span="20">
-        <el-menu class="nav" mode="horizontal" @select="handleSelect">
+        <el-menu class="nav" mode="horizontal" @select="handleSelect" :default-active="activePath">
           <el-menu-item index="">项目</el-menu-item>
           <el-menu-item index="codelabs">CodeLabs</el-menu-item>
           <el-menu-item index="forum">论坛</el-menu-item>
@@ -35,7 +35,8 @@ export default {
   name: 'navigation',
   data () {
     return {
-      search: ''
+      search: '',
+      activePath: ''
     }
   },
   methods: {
@@ -46,6 +47,7 @@ export default {
         window.location.href = 'http://localhost:3000/keystone'
       } else {
         this.$router.replace(`/${key}`)
+        this.activePath = location.pathname.split('/')[1]
       }
     },
     logout () {
@@ -67,10 +69,12 @@ export default {
       })
     }
   },
-  computed: mapGetters({
-    isLogin: 'status/isLogin',
-    profile: 'user/profile'
-  })
+  computed: {
+    ...mapGetters({
+      isLogin: 'status/isLogin',
+      profile: 'user/profile'
+    })
+  }
 }
 </script>
 

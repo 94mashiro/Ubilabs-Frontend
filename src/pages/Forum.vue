@@ -8,6 +8,7 @@
     </el-container>
     <el-aside width="280px" v-if="displayMode==='question'">
       <el-main>
+        <profile-card v-if="isLogin"></profile-card>
         <node-chooser></node-chooser>
       </el-main>
     </el-aside>
@@ -18,15 +19,18 @@
 import Toolbar from '@/components/forum/Toolbar'
 import CardList from '@/components/forum/CardList'
 import NodeChooser from '@/components/forum/NodeChooser'
+import ProfileCard from '@/components/ProfileCard'
 import { mapGetters } from 'vuex'
 export default {
   name: 'forum',
   components: {
     Toolbar,
     CardList,
-    NodeChooser
+    NodeChooser,
+    ProfileCard
   },
   computed: mapGetters({
+    isLogin: 'status/isLogin',
     displayMode: 'forum/displayMode',
     questions: 'forum/questions',
     articles: 'forum/articles',
