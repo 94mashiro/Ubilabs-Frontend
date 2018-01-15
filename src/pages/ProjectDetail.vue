@@ -5,6 +5,7 @@
       <project-detail-intro></project-detail-intro>
     </el-tab-pane>
     <el-tab-pane name="progress" label="项目进度">
+      <project-detail-progress></project-detail-progress>
     </el-tab-pane>
     <el-tab-pane name="git" label="项目代码">
       <project-detail-git></project-detail-git>
@@ -24,6 +25,7 @@
 
 <script>
 import ProjectDetailIntro from '@/components/project/ProjectDetailIntro'
+import ProjectDetailProgress from '@/components/project/ProjectDetailProgress'
 import ProjectDetailGit from '@/components/project/ProjectDetailGit'
 import ProjectDetailMember from '@/components/project/ProjectDetailMember'
 import ProjectDetailNote from '@/components/project/ProjectDetailNote'
@@ -33,6 +35,7 @@ export default {
   name: 'projectDetail',
   components: {
     ProjectDetailIntro,
+    ProjectDetailProgress,
     ProjectDetailGit,
     ProjectDetailMember,
     ProjectDetailNote,

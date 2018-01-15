@@ -10,7 +10,8 @@ const state = {
   isAddMemberDialogVisible: false,
   isAddNoteDialogVisible: false,
   isAddMilestoneDialogVisible: false,
-  projectNotes: []
+  projectNotes: [],
+  isModifyMilestoneDialogVisible: false
 }
 
 const getters = {
@@ -22,7 +23,8 @@ const getters = {
   isAddMemberDialogVisible: state => state.isAddMemberDialogVisible,
   isAddNoteDialogVisible: state => state.isAddNoteDialogVisible,
   projectNotes: state => state.projectNotes,
-  isAddMilestoneDialogVisible: state => state.isAddMilestoneDialogVisible
+  isAddMilestoneDialogVisible: state => state.isAddMilestoneDialogVisible,
+  isModifyMilestoneDialogVisible: state => state.isModifyMilestoneDialogVisible
 }
 
 const actions = {
@@ -81,6 +83,9 @@ const actions = {
   },
   setProjectMilestones: ({ commit }, { projectMilestones }) => {
     commit(types.PROJECT_SET_PROJECTMILESTONES, projectMilestones)
+  },
+  setIsModifyMilestoneDialogVisible: ({ commit }, { isModifyMilestoneDialogVisible }) => {
+    commit(types.PROJECT_SET_ISMODIFYMILESTONEDIALOGVISIBLE, isModifyMilestoneDialogVisible)
   }
 }
 
@@ -111,6 +116,9 @@ const mutations = {
   },
   [types.PROJECT_SET_ISADDMILESTONEDIALOGVISIBLE]: (state, isAddMilestoneDialogVisible) => {
     state.isAddMilestoneDialogVisible = isAddMilestoneDialogVisible
+  },
+  [types.PROJECT_SET_ISMODIFYMILESTONEDIALOGVISIBLE]: (state, isModifyMilestoneDialogVisible) => {
+    state.isModifyMilestoneDialogVisible = isModifyMilestoneDialogVisible
   },
   [types.PROJECT_SET_PROJECTMILESTONES]: (state, projectMilestones) => {
     state.project.milestones = projectMilestones

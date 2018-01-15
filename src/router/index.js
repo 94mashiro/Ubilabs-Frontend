@@ -14,6 +14,7 @@ import ActivityDetail from '@/pages/ActivityDetail'
 import Codelabs from '@/pages/Codelabs'
 import Project from '@/pages/Project'
 import ProjectDetail from '@/pages/ProjectDetail'
+import Profile from '@/pages/Profile'
 
 Vue.use(Router)
 
@@ -87,6 +88,11 @@ const routes = [
     path: '/project/:id/:tab',
     name: 'ProjectDetail',
     component: ProjectDetail
+  },
+  {
+    path: '/profile/:id',
+    name: 'Profile',
+    component: Profile
   }
 ]
 

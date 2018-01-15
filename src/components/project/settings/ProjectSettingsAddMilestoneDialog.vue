@@ -54,13 +54,13 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.postBody.project = this.$route.params.id
-          postProjectMilestone(this.postBody).then(body => {
+          postProjectMilestone(this.postBody).then(async body => {
             if (!body.success) {
               throw body.message
             } else {
               this.postBody = {}
               this.isAddMilestoneDialogVisible = false
-              this.$store.dispatch('project/getProject', { projectId: this.$route.params.id })
+              await this.$store.dispatch('project/getProject', { projectId: this.$route.params.id })
               this.$notify.success('项目里程碑添加成功。')
             }
           }).catch(err => {

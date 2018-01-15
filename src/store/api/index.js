@@ -310,3 +310,17 @@ export const getProjectMilestones = (params) => {
     return res.data
   })
 }
+
+export const deleteProjectMilestone = (params) => {
+  const paramsArr = []
+  for (let key in params) {
+    paramsArr.push(`${key}=${params[key]}`)
+  }
+  const paramsStr = `${paramsArr.join('&')}`
+  const fetchUrl = params ? `/api/project/milestone?${paramsStr}` : `/api/project/milestone/`
+  return axios.delete(
+    fetchUrl
+  ).then(res => {
+    return res.data
+  })
+}
