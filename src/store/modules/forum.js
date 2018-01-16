@@ -60,7 +60,7 @@ const actions = {
       }
       const body = await api.getQuestions({node_id: nodeId, page})
       if (body.success) {
-        commit(types.FORUM_SET_QUESTIONS, body.questions)
+        commit(types.FORUM_SET_QUESTIONS, body.result)
       } else {
         console.error(body.message)
       }

@@ -7,6 +7,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import $ from 'jquery'
 export default {
   name: 'questionAnswerToolbar',
   computed: {
@@ -20,8 +21,10 @@ export default {
   },
   props: ['answer'],
   methods: {
-    modifyAnswer () {
-      this.$store.dispatch('question/setSelectedAnswer', { selectedAnswer: this.answer })
+    async modifyAnswer () {
+      await this.$store.dispatch('question/setSelectedAnswer', { selectedAnswer: this.answer })
+      await this.$store.dispatch('question/setIsShowEditor', { isShowEditor: true })
+      window.scrollTo(0, $('#answer-editor').offset().top - 70)
     },
     async showAnswerCommentDialog () {
       await this.$store.dispatch('question/setSelectedAnswer', { selectedAnswer: this.answer })

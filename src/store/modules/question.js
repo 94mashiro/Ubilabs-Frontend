@@ -56,9 +56,8 @@ const actions = {
   setIsLoading: ({ commit }, { isLoading }) => {
     commit(types.QUESTION_SET_ISLOADING, isLoading)
   },
-  setSelectedAnswer: ({ commit, dispatch }, { selectedAnswer }) => {
+  setSelectedAnswer: ({ commit }, { selectedAnswer }) => {
     commit(types.QUESTION_SET_SELECTEDANSWER, selectedAnswer)
-    dispatch('setIsShowEditor', { isShowEditor: true })
   },
   setIsAnswerCommentVisible: ({ commit }, { isAnswerCommentVisible }) => {
     commit(types.QUESTION_SET_ISANSWERCOMMENTVISIBLE, isAnswerCommentVisible)

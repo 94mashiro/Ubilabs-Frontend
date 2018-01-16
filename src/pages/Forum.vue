@@ -10,6 +10,7 @@
     <el-aside width="280px">
       <el-main>
         <profile-card v-if="isLogin"></profile-card>
+        <intro-card v-if="!isLogin"></intro-card>
         <node-chooser v-if="displayMode==='question'"></node-chooser>
       </el-main>
     </el-aside>
@@ -22,6 +23,7 @@ import QuestionCardList from '@/components/forum/QuestionCardList'
 import ArticleCardList from '@/components/forum/ArticleCardList'
 import NodeChooser from '@/components/forum/NodeChooser'
 import ProfileCard from '@/components/ProfileCard'
+import IntroCard from '@/components/IntroCard'
 import { mapGetters } from 'vuex'
 export default {
   name: 'forum',
@@ -30,7 +32,8 @@ export default {
     ArticleCardList,
     QuestionCardList,
     NodeChooser,
-    ProfileCard
+    ProfileCard,
+    IntroCard
   },
   computed: mapGetters({
     isLogin: 'status/isLogin',

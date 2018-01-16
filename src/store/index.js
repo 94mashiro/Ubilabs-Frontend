@@ -9,6 +9,7 @@ import article from './modules/article'
 import activity from './modules/activity'
 import codelabs from './modules/codelabs'
 import project from './modules/project'
+import profile from './modules/profile'
 
 Vue.use(Vuex)
 
@@ -23,7 +24,8 @@ export default new Vuex.Store({
     article,
     activity,
     codelabs,
-    project
+    project,
+    profile
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

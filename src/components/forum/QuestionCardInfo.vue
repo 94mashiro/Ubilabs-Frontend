@@ -18,7 +18,7 @@
     </span>
     <div class="authorInfo-content">
       <div class="authorInfo-name">
-        {{ question.author.name }}
+        <router-link :to="authorProfileUrl">{{ question.author.name }}</router-link>
       </div>
       <div class="authorInfo-description">
         {{ question.author.description }}
@@ -31,7 +31,12 @@
 <script>
 export default {
   name: 'answerCardInfo',
-  props: ['question']
+  props: ['question'],
+  computed: {
+    authorProfileUrl: function () {
+      return `/profile/${this.question.author._id}`
+    }
+  }
 }
 </script>
 
@@ -72,6 +77,10 @@ export default {
       .authorInfo-name {
         font-size: 16px;
         font-weight: 600;
+        a {
+          color: #555;
+          text-decoration: none;
+        }
       }
       .authorInfo-description {
         &::before {

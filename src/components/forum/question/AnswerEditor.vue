@@ -1,9 +1,9 @@
 <template>
-  <el-card class="answer-editor" v-loading="isLoading">
+  <el-card class="answer-editor" id="answer-editor" v-loading="isLoading">
     <div class="answer-editor-header">
       <author-info></author-info>
       <div>
-        <el-button type="text close-editor-btn" @click="closeEditor()"><icon name="close" scale="1.2"></icon></el-button>
+        <el-button type="text close-editor-btn" @click="closeEditor"><icon name="close" scale="1.2"></icon></el-button>
       </div>
     </div>
     <markdown-editor class="no-border small-size" :configs="configs" v-model="editorForm.content.md"></markdown-editor>
@@ -111,6 +111,7 @@ export default {
     },
     closeEditor () {
       this.$store.dispatch('question/setIsShowEditor', { isShowEditor: false })
+      window.scrollTo(0, 0)
     }
   },
   created () {

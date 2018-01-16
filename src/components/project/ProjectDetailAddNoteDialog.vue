@@ -68,7 +68,7 @@ export default {
             throw body.message
           } else {
             this.isAddNoteDialogVisible = false
-            this.$store.dispatch('project/getProject', { projectId: this.$route.params.id })
+            await this.$store.dispatch('project/getProject', { projectId: this.$route.params.id })
             this.$message.success('笔记添加成功！')
           }
         } catch (err) {

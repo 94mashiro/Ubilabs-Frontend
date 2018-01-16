@@ -1,12 +1,12 @@
 <template>
-<div class="profile-container">
+<div class="profile-container" v-if="!isLoading">
   <el-container>
     <el-aside width="400px">
       <el-main>
         <div class="profile-card-wrapper">
           <el-card>
             <div slot="header" class="profile-card-header">
-              <avatar :src="profile.avatar" :size="80" :username="profile.name"></avatar>
+              <avatar :src="profile.avatar||''" :size="80" :username="profile.name||''"></avatar>
               <div class="user-information-wrapper">
                 <div class="user-username">{{profile.name}}</div>
                 <div class="user-meta">
@@ -41,11 +41,44 @@
       <div class="profile-aside-wrapper">
         <el-card>
           <el-tabs v-model="activeName">
-            <el-tab-pane label="项目" name="first">项目</el-tab-pane>
-            <el-tab-pane label="问题" name="second">问题</el-tab-pane>
-            <el-tab-pane label="文章" name="third">文章</el-tab-pane>
-            <el-tab-pane label="正在关注" name="fourth">正在关注</el-tab-pane>
-            <el-tab-pane label="关注者" name="fifth">关注者</el-tab-pane>
+            <el-tab-pane label="项目" name="project">
+              <el-table :data="project.results" :show-header="false">
+                <el-table-column label="">
+                  <template slot-scope="scope">
+                  <router-link :to="scope.row.url" class="row-link">{{scope.row.title}}</router-link>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <div class="table-pagination">
+                <el-pagination :total="project.total" :page-size="10" @current-change="projectPage" layout="prev, pager, next"></el-pagination>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="问题" name="question">
+              <el-table :data="question.results" :show-header="false">
+                <el-table-column label="">
+                  <template slot-scope="scope">
+                  <router-link :to="scope.row.url" class="row-link">{{scope.row.title}}</router-link>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <div class="table-pagination">
+                <el-pagination :total="question.total" :page-size="10" @current-change="questionPage" layout="prev, pager, next"></el-pagination>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="文章" name="article">
+              <el-table :data="article.results" :show-header="false">
+                <el-table-column label="">
+                  <template slot-scope="scope">
+                    <router-link :to="scope.row.url || ''" class="row-link">{{scope.row.title || ''}}</router-link>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <div class="table-pagination">
+                <el-pagination :total="article.total" :page-size="10" @current-change="articlePage" layout="prev, pager, next"></el-pagination>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="正在关注" name="following">正在关注</el-tab-pane>
+            <el-tab-pane label="关注者" name="follower">关注者</el-tab-pane>
           </el-tabs>
         </el-card>
       </div>
@@ -57,22 +90,50 @@
 <script>
 import Avatar from 'vue-avatar'
 import moment from 'moment'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'profile',
   components: {
     Avatar
   },
+  data () {
+    return {
+      activeName: 'project'
+    }
+  },
   computed: {
     ...mapGetters({
-      profile: 'user/profile'
+      profile: 'profile/profile',
+      project: 'profile/project',
+      question: 'profile/question',
+      article: 'profile/article',
+      isLoading: 'profile/isLoading'
     })
   },
   methods: {
     getI18nDate: function (date) {
       moment.locale('zh-cn')
       return moment(date).format('ll')
+    },
+    ...mapActions({
+      getArticle: 'profile/getArticle',
+      getQuestion: 'profile/getQuestion',
+      getProject: 'profile/getProject'
+    }),
+    projectPage: function (page) {
+      this.getProject({ userId: this.$route.params.id, page })
+    },
+    questionPage: function (page) {
+      console.log(page)
+      this.getQuestion({ userId: this.$route.params.id, page })
+    },
+    articlePage: function (page) {
+      console.log(page)
+      this.getArticle({ userId: this.$route.params.id, page })
     }
+  },
+  created () {
+    this.$store.dispatch('profile/getProfile', { userId: this.$route.params.id })
   }
 }
 </script>
@@ -127,6 +188,16 @@ export default {
     height: 35px;
     margin: auto 0;
   }
+}
+
+.table-pagination {
+  padding: 10px 0;
+}
+
+.row-link {
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
 }
 
 </style>

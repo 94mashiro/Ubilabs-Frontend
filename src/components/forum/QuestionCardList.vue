@@ -28,7 +28,6 @@ export default {
   },
   methods: {
     changePage: function (page) {
-      console.log('page changed', this.displayNode, page)
       this.$store.dispatch('forum/getQuestions', { nodeId: this.displayNode, page })
     }
   }

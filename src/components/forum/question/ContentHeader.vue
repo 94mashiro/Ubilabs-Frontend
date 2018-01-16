@@ -17,7 +17,9 @@
 
 <script>
 import AuthorInfo from '@/components/forum/AuthorInfo'
+import $ from 'jquery'
 import { mapGetters } from 'vuex'
+import sleep from '@/utils/sleep'
 export default {
   name: 'questionContentHeader',
   components: {
@@ -29,11 +31,13 @@ export default {
     profile: 'user/profile'
   }),
   methods: {
-    displayEditor () {
+    async displayEditor () {
       if (!this.profile) {
         this.$router.push('/login')
       } else {
-        this.$store.dispatch('question/setIsShowEditor', {isShowEditor: true})
+        await this.$store.dispatch('question/setIsShowEditor', {isShowEditor: true})
+        await sleep(0)
+        window.scrollTo(0, $('#answer-editor').offset().top - 70)
       }
     }
   }

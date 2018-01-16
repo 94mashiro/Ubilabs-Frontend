@@ -7,6 +7,7 @@
   <el-aside width="280px">
     <el-main>
       <profile-card v-if="isLogin"></profile-card>
+      <intro-card v-if="!isLogin"></intro-card>
     </el-main>
   </el-aside>
   <el-dialog title="创建新项目" :visible.sync="isCreateDialogVisible" top="10vh">
@@ -20,6 +21,7 @@ import ProjectToolbar from '@/components/project/ProjectToolbar'
 import ProjectCreateDialog from '@/components/project/ProjectCreateDialog'
 import ProjectCardList from '@/components/project/ProjectCardList'
 import ProfileCard from '@/components/ProfileCard'
+import IntroCard from '@/components/IntroCard'
 import { mapGetters } from 'vuex'
 export default {
   name: 'project',
@@ -27,7 +29,8 @@ export default {
     ProjectToolbar,
     ProjectCreateDialog,
     ProjectCardList,
-    ProfileCard
+    ProfileCard,
+    IntroCard
   },
   computed: {
     isCreateDialogVisible: {

@@ -5,7 +5,8 @@
     </span>
     <div class="author-info">
       <div class="author-info-head">
-        <span>{{display.name}}</span>
+        <!-- <span>{{display.name}}</span> -->
+        <router-link :to="display.url">{{display.name}}</router-link>
       </div>
       <div class="author-info-detail" v-if="!this.mini && display.description">
         <span>{{display.description}}</span>
@@ -36,7 +37,8 @@ export default {
       display: {
         name: '',
         description: '',
-        avatar: ''
+        avatar: '',
+        url: ''
       }
     }
   },
@@ -48,10 +50,12 @@ export default {
       this.display.name = this.profile.name
       this.display.description = this.profile.description
       this.display.avatar = this.profile.avatar
+      this.display.url = `/profile/${this.profile._id}`
     } else {
       this.display.name = this.author.name
       this.display.description = this.author.description
       this.display.avatar = this.author.avatar
+      this.display.url = `/profile/${this.author._id}`
     }
   }
 }
@@ -75,9 +79,11 @@ export default {
 .author-info {
   margin-left: 10px;
   line-height: 1.4;
-  .author-info-head {
+  .author-info-head a {
     font-size: 15px;
     font-weight: 600;
+    color: #333;
+    text-decoration: none;
   }
   .author-info-detail {
     font-size: 14px;
