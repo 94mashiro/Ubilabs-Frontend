@@ -49,7 +49,7 @@ export default {
   methods: {
     async submitAnswer () {
       this.isLoading = true
-      if (!this.isSelectedAnswer) {
+      if (!this.isModifyAnswer) {
         postAnswer(this.editorForm)
         .then((body) => {
           if (body.success) {
@@ -115,7 +115,8 @@ export default {
   },
   created () {
     this.configs = markdownEditorConfigs
-    if (this.isSelectedAnswer) {
+    console.log(this.isModifyAnswer)
+    if (this.isModifyAnswer) {
       this.editorForm.content.md = this.selectedAnswer.content.md
       this.editorForm._id = this.selectedAnswer.id
     }

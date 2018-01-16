@@ -15,13 +15,13 @@ export default {
     }),
     commentText: function () {
       return this.answer.comments === 0 ? `添加评论` : `${this.answer.comments}条评论`
+      // return `查看评论`
     }
   },
   props: ['answer'],
   methods: {
     modifyAnswer () {
       this.$store.dispatch('question/setSelectedAnswer', { selectedAnswer: this.answer })
-      this.$store.dispatch('question/setIsShowEditor', { isShowEditor: true })
     },
     async showAnswerCommentDialog () {
       await this.$store.dispatch('question/setSelectedAnswer', { selectedAnswer: this.answer })

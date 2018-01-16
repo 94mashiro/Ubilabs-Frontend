@@ -83,7 +83,7 @@ export default {
           }
         }).finally(() => {
           this.clearFormData()
-          this.$store.dispatch('forum/getQuestions', { nodeId: this.displayNode })
+          this.$store.dispatch('forum/getQuestions', { nodeId: this.displayNode, page: 1 })
         })
     }
   },

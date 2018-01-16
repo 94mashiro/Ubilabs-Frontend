@@ -3,7 +3,8 @@
   <el-card>
     <div slot="header" class="profile-header">
       <avatar :username="profile.name" :src="profile.avatar"></avatar>
-      <span class="profile-name">{{profile.name}}</span>
+      <!-- <span class="profile-name">{{profile.name}}</span> -->
+      <router-link :to="profileUrl" class="profile-name">{{profile.name}}</router-link>
     </div>
     <div class="profile-counter-wrapper">
       <div class="counter-item">
@@ -33,9 +34,14 @@ export default {
   components: {
     Avatar
   },
-  computed: mapGetters({
-    profile: 'user/profile'
-  })
+  computed: {
+    ...mapGetters({
+      profile: 'user/profile'
+    }),
+    profileUrl: function () {
+      return `/profile/${this.profile._id}`
+    }
+  }
 }
 </script>
 
@@ -53,6 +59,8 @@ export default {
     width: 120px;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: #000;
+    text-decoration: none;
   }
 }
 .profile-counter-wrapper {

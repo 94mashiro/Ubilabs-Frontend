@@ -3,13 +3,14 @@
     <el-container>
       <el-main>
         <toolbar></toolbar>
-        <card-list v-loading="isLoadingList" element-loading-background="#ffffff"></card-list>
+        <article-card-list v-if="displayMode === 'article'" v-loading="isLoadingList" element-loading-background="#ffffff"></article-card-list>
+        <question-card-list v-if="displayMode === 'question'" v-loading="isLoadingList" element-loading-background="#ffffff"></question-card-list>
       </el-main>
     </el-container>
-    <el-aside width="280px" v-if="displayMode==='question'">
+    <el-aside width="280px">
       <el-main>
         <profile-card v-if="isLogin"></profile-card>
-        <node-chooser></node-chooser>
+        <node-chooser v-if="displayMode==='question'"></node-chooser>
       </el-main>
     </el-aside>
   </el-container>
@@ -17,7 +18,8 @@
 
 <script>
 import Toolbar from '@/components/forum/Toolbar'
-import CardList from '@/components/forum/CardList'
+import QuestionCardList from '@/components/forum/QuestionCardList'
+import ArticleCardList from '@/components/forum/ArticleCardList'
 import NodeChooser from '@/components/forum/NodeChooser'
 import ProfileCard from '@/components/ProfileCard'
 import { mapGetters } from 'vuex'
@@ -25,7 +27,8 @@ export default {
   name: 'forum',
   components: {
     Toolbar,
-    CardList,
+    ArticleCardList,
+    QuestionCardList,
     NodeChooser,
     ProfileCard
   },

@@ -26,13 +26,16 @@ const getters = {
 const actions = {
   getQuestion: async ({ commit, dispatch }, { questionId, userId }) => {
     dispatch('setIsLoading', { isLoading: true })
+    dispatch('setIsShowEditor', {isShowEditor: false})
+    dispatch('setSelectedAnswer', { selectedAnswer: {} })
+    dispatch('setIsAnswerCommentVisible', { isAnswerCommentVisible: false })
     dispatch('setIsAnswered', { isAnswered: false })
     try {
       const { question } = await api.getQuestion(questionId)
       const { answers } = await api.getAnswers(questionId)
       commit(types.QUESTION_SET_QUESTION, question)
       commit(types.QUESTION_SET_ANSWERS, answers)
-      for (let answer of answers) {
+      for (let answer of question.answer) {
         if (answer.author._id === userId) {
           dispatch('setIsAnswered', { isAnswered: true })
         }
@@ -53,8 +56,9 @@ const actions = {
   setIsLoading: ({ commit }, { isLoading }) => {
     commit(types.QUESTION_SET_ISLOADING, isLoading)
   },
-  setSelectedAnswer: ({ commit }, { selectedAnswer }) => {
+  setSelectedAnswer: ({ commit, dispatch }, { selectedAnswer }) => {
     commit(types.QUESTION_SET_SELECTEDANSWER, selectedAnswer)
+    dispatch('setIsShowEditor', { isShowEditor: true })
   },
   setIsAnswerCommentVisible: ({ commit }, { isAnswerCommentVisible }) => {
     commit(types.QUESTION_SET_ISANSWERCOMMENTVISIBLE, isAnswerCommentVisible)
@@ -71,7 +75,7 @@ const mutations = {
     state.question = question
   },
   [types.QUESTION_SET_ANSWERS]: (state, answers) => {
-    state.answers = answers
+    state.question.answer = answers
   },
   [types.QUESTION_SET_ISANSWERED]: (state, isAnswered) => {
     state.isAnswered = isAnswered

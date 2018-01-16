@@ -24,7 +24,8 @@ export default {
     ...mapGetters({
       profile: 'user/profile',
       isLoading: 'question/isLoading',
-      question: 'question/question'
+      question: 'question/question',
+      questions: 'forum/questions'
     }),
     isAnswerCommentVisible: {
       get: function () {
@@ -36,10 +37,10 @@ export default {
     }
   },
   async created () {
-    this.$store.dispatch('question/setIsShowEditor', {isShowEditor: false})
-    this.$store.dispatch('question/setSelectedAnswer', { selectedAnswer: {} })
-    this.$store.dispatch('question/setIsAnswerCommentVisible', { isAnswerCommentVisible: false })
     await this.$store.dispatch('question/getQuestion', {questionId: this.$route.params.id, userId: this.profile && this.profile._id})
+    if (!this.questions.length) {
+      await this.$store.dispatch('forum/getQuestions', { nodeId: this.question.node._id, page: 1 })
+    }
     if (!this.question) {
       this.$message.error({
         message: '找不到该页面',

@@ -1,9 +1,11 @@
 <template>
 <el-card header="相似问题" v-loading="isLoading">
   <div class="similar-question-list-wrapper">
-    <div class="similar-question-wrapper" v-for="i in similarQuestions" :key="i.id" v-if="similarQuestions.length > 0">
-      <a :href="i.url" class="question-link" v-if="question">{{i.title}}</a>
-    </div>
+    <ul v-if="similarQuestions.length > 0">
+      <li v-for="i in similarQuestions" :key="i.id">
+        <a :href="i.url" class="question-link" v-if="question">{{i.title}}</a>
+      </li>
+    </ul>
     <div class="no-question" v-if="similarQuestions.length === 0">
       暂时还没有相似问题
     </div>
@@ -17,23 +19,23 @@ export default {
   name: 'similarQuestionList',
   computed: {
     ...mapGetters({
-      question: 'question/question'
-    }),
-    similarQuestions: function () {
-      return this.$store.state.forum.questions.filter(question => {
-        return question._id !== this.question._id
-      })
-    }
+      question: 'question/question',
+      questions: 'forum/questions'
+    })
   },
   data () {
     return {
-      isLoading: false
+      isLoading: false,
+      similarQuestions: []
     }
   },
   async created () {
     if (this.similarQuestions.length === 0 && this.question.node) {
       this.isLoading = true
-      await this.$store.dispatch('forum/getQuestions', { nodeId: this.question.node._id })
+      await this.$store.dispatch('forum/getQuestions', { nodeId: this.question.node._id, page: 1 })
+      this.similarQuestions = this.questions.results.filter(question => {
+        return question._id !== this.question._id
+      })
       this.isLoading = false
     }
   }
@@ -44,14 +46,20 @@ export default {
 .similar-question-list-wrapper {
   display: flex;
   flex-direction: column;
+  padding-left: 20px;
 
-  .similar-question-wrapper {
+  ul {
+    list-style-type: disc;
+  }
+
+  li {
     margin-bottom: 5px;
 
     .question-link {
       text-decoration: none;
       color: #000;
-      font-size: 14px;
+      font-size: 16px;
+      line-height: 1.2;
     }
   }
 }

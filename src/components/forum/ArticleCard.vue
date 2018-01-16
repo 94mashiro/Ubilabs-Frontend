@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card :body-style="{padding: '15px 20px'}">
     <div class="article-card-wrapper">
       <div class="article-title">
         <router-link :to="url" class="article-navigation-link">{{article.title}}</router-link>

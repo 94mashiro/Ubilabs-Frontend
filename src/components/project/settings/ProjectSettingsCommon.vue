@@ -61,7 +61,7 @@ export default {
     const { project } = this.$store.state.project
     this.postBody.title = project.title
     this.postBody.description = project.description
-    this.postBody.story = project.story
+    this.postBody.story.md = project.story.md
     this.postBody.node = project.node.map(item => {
       return item._id
     })

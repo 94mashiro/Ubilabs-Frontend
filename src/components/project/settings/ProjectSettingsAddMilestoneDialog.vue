@@ -21,6 +21,7 @@
 
 <script>
 import { postProjectMilestone } from '@/store/api'
+import { mapActions } from 'vuex'
 export default {
   name: 'projectSettingsAddMilestoneDialog',
   computed: {
@@ -50,6 +51,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      getProject: 'project/getProject'
+    }),
     submitForm: function () {
       this.$refs.form.validate((valid) => {
         if (valid) {
@@ -60,7 +64,7 @@ export default {
             } else {
               this.postBody = {}
               this.isAddMilestoneDialogVisible = false
-              await this.$store.dispatch('project/getProject', { projectId: this.$route.params.id })
+              await this.getProject({ projectId: this.$route.params.id })
               this.$notify.success('项目里程碑添加成功。')
             }
           }).catch(err => {

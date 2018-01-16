@@ -1,9 +1,9 @@
 <template>
 <div class="answer-list">
-  <div class="answer-card-wrapper" v-for="answer in answers" :key="answer.id" v-if="answers.length !== 0">
+  <div class="answer-card-wrapper" v-for="answer in question.answer" :key="answer.id" v-if="question.answer && question.answer.length !== 0">
     <question-answer-card :answer="answer"></question-answer-card>
   </div>
-  <div class="answer-card-wrapper" v-if="answers.length === 0">
+  <div class="answer-card-wrapper" v-if="question.answer && question.answer.length === 0">
     <el-card>
       目前还没有任何回答。
     </el-card>
@@ -20,7 +20,7 @@ export default {
     QuestionAnswerCard
   },
   computed: mapGetters({
-    answers: 'question/answers'
+    question: 'question/question'
   })
 }
 </script>

@@ -9,9 +9,9 @@
     </el-button>
   </div>
   <div class="question-actions">
-    <button class="button-plain question-actions-item"><span><icon class="icon" name="star" :scale="2"></icon>关注问题</span></button>
-    <button class="button-plain question-actions-item" @click="navigateQuestion()"><span><icon class="icon" name="reply" :scale="1.7"></icon>{{question.answers}}条回答</span></button>
-    <button class="button-plain question-actions-item"><span><icon class="icon" name="police" :scale="2"></icon>举报</span></button>
+    <!-- <button class="button-plain question-actions-item"><span><icon class="icon" name="star" :scale="2"></icon>关注问题</span></button> -->
+    <button class="button-plain question-actions-item" @click="navigateQuestion()"><span><icon class="icon" name="reply" :scale="1.7"></icon>{{(question.answer && question.answer.length) || 0}}条回答</span></button>
+    <!-- <button class="button-plain question-actions-item"><span><icon class="icon" name="police" :scale="2"></icon>举报</span></button> -->
   </div>
 </div>
 </template>

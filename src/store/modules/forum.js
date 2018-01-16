@@ -8,7 +8,9 @@ const state = {
   questions: [],
   articles: [],
   isLoadingList: false,
-  isQuestionDialogVisible: false
+  isQuestionDialogVisible: false,
+  totalQuestionsPages: 1,
+  totalArticlesPages: 1
 }
 
 const getters = {
@@ -26,9 +28,9 @@ const actions = {
   setDisplayMode: ({ commit, dispatch, state }, { displayMode }) => {
     commit(types.FORUM_SET_DISPLAYMODE, displayMode)
     if (displayMode === 'question') {
-      dispatch('getQuestions', { displayNode: state.displayNode })
+      dispatch('getQuestions', { displayNode: state.displayNode, page: 1 })
     } else {
-      dispatch('getArticles')
+      dispatch('getArticles', { page: 1 })
     }
   },
   getQuestionNodes: async ({ commit }) => {
@@ -48,15 +50,15 @@ const actions = {
   },
   setDisplayNode: async ({ commit, dispatch }, { displayNode }) => {
     commit(types.FORUM_SET_DISPLAY_NODE, displayNode)
-    await dispatch('getQuestions', { nodeId: displayNode })
+    await dispatch('getQuestions', { nodeId: displayNode, page: 1 })
   },
-  getQuestions: async ({ commit }, { nodeId }) => {
+  getQuestions: async ({ commit }, { nodeId, page }) => {
     commit(types.FORUM_SET_ISLOADINGLIST, true)
     try {
       if (nodeId === void 0) {
         nodeId = ''
       }
-      const body = await api.getQuestions({node_id: nodeId})
+      const body = await api.getQuestions({node_id: nodeId, page})
       if (body.success) {
         commit(types.FORUM_SET_QUESTIONS, body.questions)
       } else {
@@ -68,14 +70,14 @@ const actions = {
       commit(types.FORUM_SET_ISLOADINGLIST, false)
     }
   },
-  getArticles: ({ commit }) => {
+  getArticles: ({ commit, dispatch }, { page }) => {
     commit(types.FORUM_SET_ISLOADINGLIST, true)
-    api.getArticles()
-      .then(body => {
+    api.getArticles({ page })
+      .then(async body => {
         if (body.success) {
           commit(types.FORUM_SET_ARTICLES, body.result)
         } else {
-          console.error(body.message)
+          throw body.message
         }
       }).catch(err => {
         console.error(err)
@@ -84,7 +86,7 @@ const actions = {
       })
   },
   setIsQuestionDialogVisible: ({ commit }, { isQuestionDialogVisible }) => {
-    commit(types.FORUM_SET_ISQUESTIONDIALOGVISIBLE, { isQuestionDialogVisible })
+    commit(types.FORUM_SET_ISQUESTIONDIALOGVISIBLE, isQuestionDialogVisible)
   }
 }
 
@@ -110,7 +112,7 @@ const mutations = {
   [types.FORUM_SET_ARTICLES]: (state, articles) => {
     state.articles = articles
   },
-  [types.FORUM_SET_ISQUESTIONDIALOGVISIBLE]: (state, { isQuestionDialogVisible }) => {
+  [types.FORUM_SET_ISQUESTIONDIALOGVISIBLE]: (state, isQuestionDialogVisible) => {
     state.isQuestionDialogVisible = isQuestionDialogVisible
   }
 }
