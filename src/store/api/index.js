@@ -338,3 +338,12 @@ export const deleteProjectNote = (params) => {
     return res.data
   })
 }
+
+export const patchProjectMilestone = (data) => {
+  return axios.patch(
+    '/api/project/milestone',
+    data
+  ).then(res => {
+    return res.data
+  })
+}
