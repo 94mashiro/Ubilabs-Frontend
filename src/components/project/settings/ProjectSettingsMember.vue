@@ -6,11 +6,11 @@
     <el-button type="text" icon="el-icon-plus" style="padding: 0" @click="showDialog">添加成员</el-button>
   </div>
   <el-table :data="project.member" stripe style="width: 100%">
-    <el-table-column label="姓名" prop="name"></el-table-column>
-    <el-table-column label="邮箱" prop="email"></el-table-column>
+    <el-table-column label="姓名" prop="name" min-width="200"></el-table-column>
+    <el-table-column label="邮箱" prop="email" min-width="200"></el-table-column>
     <el-table-column label="操作">
       <template slot-scope="scope">
-        <el-button type="danger" size="mini" @click="handleDelete(scope.row)" icon="el-icon-close">删除</el-button>
+        <el-button type="danger" size="mini" @click="handleDelete(scope.row)" icon="el-icon-delete">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -44,11 +44,11 @@ export default {
           if (!body.success) {
             throw body.message
           } else {
-            this.$store.dispatch('project/getProject', { projectId: this.$route.params.id })
-            this.$message.success('成员删除成功。')
+            await this.$store.dispatch('project/getProject', { projectId: this.$route.params.id })
+            this.$notify.success('成员删除成功。')
           }
         } catch (err) {
-          this.$message.error(err.message || err)
+          this.$notify.error(err.message || err)
         }
       }
     }

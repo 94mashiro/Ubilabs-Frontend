@@ -25,7 +25,7 @@
       <template slot-scope="scope">
         <div class="operation-wrapper">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="showModifyDialog(scope.row)">编辑</el-button>
-          <el-button type="danger" size="mini" icon="el-icon-close" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(scope.row)">删除</el-button>
         </div>
       </template>
     </el-table-column>

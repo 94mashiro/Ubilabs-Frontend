@@ -46,19 +46,19 @@ export default {
 .similar-question-list-wrapper {
   display: flex;
   flex-direction: column;
-  padding-left: 20px;
+  padding-left: 15px;
 
   ul {
     list-style-type: disc;
   }
 
   li {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 
     .question-link {
       text-decoration: none;
       color: #000;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 1.2;
     }
   }
