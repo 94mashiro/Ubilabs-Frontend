@@ -347,3 +347,54 @@ export const patchProjectMilestone = (data) => {
     return res.data
   })
 }
+
+export const getFollow = (params) => {
+  const paramsArr = []
+  for (let key in params) {
+    paramsArr.push(`${key}=${params[key]}`)
+  }
+  const paramsStr = `${paramsArr.join('&')}`
+  const fetchUrl = params ? `/api/follow?${paramsStr}` : `/api/follow`
+  return axios.get(
+    fetchUrl
+  ).then(res => {
+    return res.data
+  })
+}
+
+export const postFollow = (data) => {
+  return axios.post(
+    '/api/follow',
+    data
+  ).then(res => {
+    return res.data
+  })
+}
+
+export const deleteFollow = (params) => {
+  const paramsArr = []
+  for (let key in params) {
+    paramsArr.push(`${key}=${params[key]}`)
+  }
+  const paramsStr = `${paramsArr.join('&')}`
+  const fetchUrl = params ? `/api/follow?${paramsStr}` : `/api/follow`
+  return axios.delete(
+    fetchUrl
+  ).then(res => {
+    return res.data
+  })
+}
+
+export const getRss = (params) => {
+  const paramsArr = []
+  for (let key in params) {
+    paramsArr.push(`${key}=${params[key]}`)
+  }
+  const paramsStr = `${paramsArr.join('&')}`
+  const fetchUrl = params ? `/api/follow/rss?${paramsStr}` : `/api/follow/rss`
+  return axios.get(
+    fetchUrl
+  ).then(res => {
+    return res.data
+  })
+}

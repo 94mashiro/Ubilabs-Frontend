@@ -8,7 +8,13 @@
             <div slot="header" class="profile-card-header">
               <avatar :src="profile.avatar||''" :size="80" :username="profile.name||''"></avatar>
               <div class="user-information-wrapper">
-                <div class="user-username">{{profile.name}}</div>
+                <div class="user-left">
+                  <div class="user-username">{{profile.name}}</div>
+                  <div class="user-follow-btn" v-if="isLogin && profile._id !== userProfile._id">
+                    <el-button type="success" size="mini" v-if="!isFollowing" @click="handleFollowing">关注</el-button>
+                    <el-button type="danger" size="mini" v-if="isFollowing" @click="handleUnFollowing">取消关注</el-button>
+                  </div>
+                </div>
                 <div class="user-meta">
                   <span>
                     <p>加入于 {{getI18nDate(profile.createdAt)}}</p>
@@ -77,8 +83,12 @@
                 <el-pagination :total="article.total" :page-size="10" @current-change="articlePage" layout="prev, pager, next"></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="正在关注" name="following">正在关注</el-tab-pane>
-            <el-tab-pane label="关注者" name="follower">关注者</el-tab-pane>
+            <el-tab-pane label="正在关注" name="following">
+              <profile-user-list :users="profile.following"></profile-user-list>
+            </el-tab-pane>
+            <el-tab-pane label="关注者" name="follower">
+              <profile-user-list :users="profile.follower"></profile-user-list>
+            </el-tab-pane>
           </el-tabs>
         </el-card>
       </div>
@@ -89,12 +99,14 @@
 
 <script>
 import Avatar from 'vue-avatar'
+import ProfileUserList from '@/components/profile/ProfileUserList'
 import moment from 'moment'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'profile',
   components: {
-    Avatar
+    Avatar,
+    ProfileUserList
   },
   data () {
     return {
@@ -107,8 +119,13 @@ export default {
       project: 'profile/project',
       question: 'profile/question',
       article: 'profile/article',
-      isLoading: 'profile/isLoading'
-    })
+      isLoading: 'profile/isLoading',
+      userProfile: 'user/profile',
+      isLogin: 'status/isLogin'
+    }),
+    isFollowing: function () {
+      return this.userProfile.following.filter(user => user._id === this.profile._id).length > 0
+    }
   },
   methods: {
     getI18nDate: function (date) {
@@ -124,12 +141,28 @@ export default {
       this.getProject({ userId: this.$route.params.id, page })
     },
     questionPage: function (page) {
-      console.log(page)
       this.getQuestion({ userId: this.$route.params.id, page })
     },
     articlePage: function (page) {
-      console.log(page)
       this.getArticle({ userId: this.$route.params.id, page })
+    },
+    handleFollowing: async function () {
+      try {
+        await this.$store.dispatch('follow/follow', { followerId: this.userProfile._id, followingId: this.profile._id })
+        this.$notify.success('关注成功。')
+      } catch (err) {
+        console.error(err)
+        this.$notify.error(err)
+      }
+    },
+    handleUnFollowing: async function () {
+      try {
+        await this.$store.dispatch('follow/unfollow', { followerId: this.userProfile._id, followingId: this.profile._id })
+        this.$notify.success('取消关注成功。')
+      } catch (err) {
+        console.error(err)
+        this.$notify.error(err)
+      }
     }
   },
   created () {
@@ -153,6 +186,11 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    .user-left {
+      display: flex;
+      justify-content: space-between;
+    }
 
     .user-username {
       font-size: 24px;

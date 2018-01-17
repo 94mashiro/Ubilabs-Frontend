@@ -2,7 +2,18 @@ import * as types from '../mutation-types'
 import * as api from '../api'
 
 const state = {
-  profile: {},
+  profile: {
+    _id: '',
+    articleCount: '',
+    avatar: '',
+    email: '',
+    gitlabId: '',
+    name: '',
+    projectCount: '',
+    questionCount: '',
+    following: [],
+    follower: []
+  },
   project: {},
   question: {},
   article: {},
@@ -24,6 +35,8 @@ const actions = {
       const profile = await api.getProfile({ user_id: userId })
       if (profile.success) {
         dispatch('setProfile', { profile: profile.result })
+        dispatch('getFollower', { userId })
+        dispatch('getFollowing', { userId })
         dispatch('getProject', { userId, page: 1 })
         dispatch('getQuestion', { userId, page: 1 })
         dispatch('getArticle', { userId, page: 1 })
@@ -72,6 +85,46 @@ const actions = {
       console.error(err.message || err)
     }
   },
+  getFollowing: async ({ dispatch }, { userId }) => {
+    try {
+      const body = await api.getFollow({ follower_id: userId })
+      if (!body.success) {
+        throw body.message
+      } else {
+        const followingList = body.result.map(result => {
+          return {
+            ...result.following
+          }
+        })
+        dispatch('setFollowing', { following: followingList })
+      }
+    } catch (err) {
+      console.error(err.message || err)
+    }
+  },
+  getFollower: async ({ dispatch }, { userId }) => {
+    try {
+      const body = await api.getFollow({ following_id: userId })
+      if (!body.success) {
+        throw body.message
+      } else {
+        const followerList = body.result.map(result => {
+          return {
+            ...result.follower
+          }
+        })
+        dispatch('setFollower', { follower: followerList })
+      }
+    } catch (err) {
+      console.error(err.message || err)
+    }
+  },
+  setFollowing: ({ commit }, { following }) => {
+    commit(types.PROFILE_SET_FOLLOWING, following)
+  },
+  setFollower: ({ commit }, { follower }) => {
+    commit(types.PROFILE_SET_FOLLOWER, follower)
+  },
   setProfile: ({ commit }, { profile }) => {
     commit(types.PROFILE_SET_PROFILE, profile)
   },
@@ -91,7 +144,7 @@ const actions = {
 
 const mutations = {
   [types.PROFILE_SET_PROFILE]: (state, profile) => {
-    state.profile = profile
+    state.profile = {...state.profile, ...profile}
   },
   [types.PROFILE_SET_ISLOADING]: (state, isLoading) => {
     state.isLoading = isLoading
@@ -104,6 +157,12 @@ const mutations = {
   },
   [types.PROFILE_SET_ARTICLE]: (state, article) => {
     state.article = article
+  },
+  [types.PROFILE_SET_FOLLOWING]: (state, following) => {
+    state.profile.following = following
+  },
+  [types.PROFILE_SET_FOLLOWER]: (state, follower) => {
+    state.profile.follower = follower
   }
 }
 
