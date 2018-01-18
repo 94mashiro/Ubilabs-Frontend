@@ -1,5 +1,5 @@
 <template>
-<div class="profile-container" v-if="!isLoading">
+<div class="profile-container" v-loading="isLoading" element-loading-background="#f3f3f3">
   <el-container>
     <el-aside width="400px">
       <el-main>
@@ -11,8 +11,8 @@
                 <div class="user-left">
                   <div class="user-username">{{profile.name}}</div>
                   <div class="user-follow-btn" v-if="isLogin && profile._id !== userProfile._id">
-                    <el-button type="success" size="mini" v-if="!isFollowing" @click="handleFollowing">关注</el-button>
-                    <el-button type="danger" size="mini" v-if="isFollowing" @click="handleUnFollowing">取消关注</el-button>
+                    <el-button type="success" size="mini" v-if="!profile.isFollowing" @click="handleFollowing">关注</el-button>
+                    <el-button type="danger" size="mini" v-if="profile.isFollowing" @click="handleUnFollowing">取消关注</el-button>
                   </div>
                 </div>
                 <div class="user-meta">
@@ -122,10 +122,7 @@ export default {
       isLoading: 'profile/isLoading',
       userProfile: 'user/profile',
       isLogin: 'status/isLogin'
-    }),
-    isFollowing: function () {
-      return this.userProfile.following.filter(user => user._id === this.profile._id).length > 0
-    }
+    })
   },
   methods: {
     getI18nDate: function (date) {
@@ -167,6 +164,11 @@ export default {
   },
   created () {
     this.$store.dispatch('profile/getProfile', { userId: this.$route.params.id })
+  },
+  watch: {
+    '$route' (to, from) {
+      this.$store.dispatch('profile/getProfile', { userId: this.$route.params.id })
+    }
   }
 }
 </script>

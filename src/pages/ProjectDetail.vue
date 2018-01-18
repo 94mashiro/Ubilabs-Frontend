@@ -1,6 +1,6 @@
 <template>
 <div class="project-detail-wrapper">
-  <el-tabs v-model="selectedTab" type="border-card"  v-if="!isLoadingProject" @tab-click="handleClick">
+  <el-tabs v-model="selectedTab" type="border-card" v-loading="isLoadingProject" element-loading-background="#fff" @tab-click="handleClick">
     <el-tab-pane name="intro" label="项目介绍">
       <project-detail-intro></project-detail-intro>
     </el-tab-pane>

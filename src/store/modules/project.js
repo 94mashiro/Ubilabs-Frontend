@@ -5,7 +5,32 @@ const state = {
   isCreateDialogVisible: false,
   isLoadingProjectList: false,
   projects: [],
-  project: {},
+  project: {
+    __v: '',
+    _id: '',
+    createdAt: '',
+    description: '',
+    gitId: 0,
+    gitSSH: '',
+    gitTitle: '',
+    imageUrls: [],
+    leader: {
+      _id: '',
+      avatar: '',
+      email: '',
+      name: ''
+    },
+    member: [],
+    milestones: [],
+    node: [],
+    notes: [],
+    story: {
+      md: '',
+      html: ''
+    },
+    title: '',
+    updatedAt: ''
+  },
   isLoadingProject: false,
   isAddMemberDialogVisible: false,
   isAddNoteDialogVisible: false,

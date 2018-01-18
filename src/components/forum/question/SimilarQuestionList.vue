@@ -3,7 +3,7 @@
   <div class="similar-question-list-wrapper">
     <ul v-if="similarQuestions.length > 0">
       <li v-for="i in similarQuestions" :key="i.id">
-        <a :href="i.url" class="question-link" v-if="question">{{i.title}}</a>
+        <router-link :to="i.url" v-if="question" class="question-link">{{i.title}}</router-link>
       </li>
     </ul>
     <div class="no-question" v-if="similarQuestions.length === 0">

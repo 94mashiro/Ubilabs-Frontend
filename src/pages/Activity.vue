@@ -1,10 +1,10 @@
 <template>
-  <el-container class="container" v-loading="isLoading" element-loading-background="#f3f3f3">
+  <el-container class="container">
     <el-header>
       <filter-toolbar></filter-toolbar>
     </el-header>
     <el-main>
-      <activity-list :activities="activities"></activity-list>
+      <activity-list :activities="activities" v-loading="isLoading" element-loading-background="#fff"></activity-list>
       <el-dialog title="创建新活动" :visible.sync="isCreateDialogVisible" top="5vh" @close="handleClose">
         <create-dialog></create-dialog>
       </el-dialog>

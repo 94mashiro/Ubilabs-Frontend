@@ -49,6 +49,7 @@ const actions = {
         followingList.push(followingProfile)
         dispatch('profile/setFollower', { follower: followerList }, { root: true })
         dispatch('user/setFollowing', { following: followingList }, { root: true })
+        dispatch('profile/setIsFollowing', null, { root: true })
       }
     } catch (err) {
       throw err.message || err
@@ -68,6 +69,7 @@ const actions = {
         })
         dispatch('profile/setFollower', { follower: followerList }, { root: true })
         dispatch('user/setFollowing', { following: followingList }, { root: true })
+        dispatch('profile/setIsFollowing', null, { root: true })
       }
     } catch (err) {
       throw err.message || err

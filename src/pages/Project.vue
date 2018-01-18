@@ -2,7 +2,7 @@
 <el-container class="container">
   <el-main>
     <project-toolbar v-if="isLogin"></project-toolbar>
-    <project-card-list :list="projects"></project-card-list>
+    <project-card-list :list="projects" v-loading="isLoadingProjectList" element-loading-background="#fff"></project-card-list>
   </el-main>
   <el-aside width="280px">
     <el-main>
@@ -46,7 +46,8 @@ export default {
     },
     ...mapGetters({
       isLogin: 'status/isLogin',
-      projects: 'project/projects'
+      projects: 'project/projects',
+      isLoadingProjectList: 'project/isLoadingProjectList'
     })
   },
   created () {

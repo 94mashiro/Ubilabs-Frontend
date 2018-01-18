@@ -49,6 +49,11 @@ export default {
       })
       this.$router.push('/forum')
     }
+  },
+  watch: {
+    '$route' (to, from) {
+      this.$store.dispatch('question/getQuestion', {questionId: this.$route.params.id, userId: this.profile && this.profile._id})
+    }
   }
 }
 </script>

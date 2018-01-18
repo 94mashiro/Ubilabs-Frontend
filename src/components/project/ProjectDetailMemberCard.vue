@@ -1,6 +1,6 @@
 <template>
 <div class="project-member-wrapper">
-  <author-info :author="member"></author-info>
+  <author-info :author="member" :key="member._id"></author-info>
   <div :id="'chart-'+this.member._id.substring(0, 5)"></div>
 </div>
 </template>
@@ -28,7 +28,7 @@ export default {
       this.notes.forEach(note => {
         const countDate = new Date(note.createdAt)
         const date = `${countDate.getFullYear()}-${countDate.getMonth() + 1}-${countDate.getDate()}`
-        if (!table.date) {
+        if (!table[date]) {
           const insideObj = {
             date: new Date(date),
             count: 1

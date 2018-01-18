@@ -12,7 +12,8 @@ const state = {
     projectCount: '',
     questionCount: '',
     following: [],
-    follower: []
+    follower: [],
+    isFollowing: false
   },
   project: {},
   question: {},
@@ -34,12 +35,13 @@ const actions = {
       dispatch('setIsLoading', { isLoading: true })
       const profile = await api.getProfile({ user_id: userId })
       if (profile.success) {
-        dispatch('setProfile', { profile: profile.result })
-        dispatch('getFollower', { userId })
-        dispatch('getFollowing', { userId })
-        dispatch('getProject', { userId, page: 1 })
-        dispatch('getQuestion', { userId, page: 1 })
-        dispatch('getArticle', { userId, page: 1 })
+        await dispatch('setProfile', { profile: profile.result })
+        await dispatch('getFollower', { userId })
+        await dispatch('getFollowing', { userId })
+        await dispatch('setIsFollowing')
+        await dispatch('getProject', { userId, page: 1 })
+        await dispatch('getQuestion', { userId, page: 1 })
+        await dispatch('getArticle', { userId, page: 1 })
       } else {
         throw new Error('api fetch error')
       }
@@ -113,10 +115,20 @@ const actions = {
             ...result.follower
           }
         })
-        dispatch('setFollower', { follower: followerList })
+        await dispatch('setFollower', { follower: followerList })
       }
     } catch (err) {
       console.error(err.message || err)
+    }
+  },
+  setIsFollowing: ({ commit, state, rootState }) => {
+    const followerList = state.profile.follower
+    if (!rootState.status.isLogin) {
+      commit(types.PROFILE_SET_ISFOLLOWING, { isFollowing: false })
+    } else {
+      const myId = rootState.user.profile._id
+      const isFollowing = followerList.filter(user => user._id === myId).length > 0
+      commit(types.PROFILE_SET_ISFOLLOWING, isFollowing)
     }
   },
   setFollowing: ({ commit }, { following }) => {
@@ -163,6 +175,9 @@ const mutations = {
   },
   [types.PROFILE_SET_FOLLOWER]: (state, follower) => {
     state.profile.follower = follower
+  },
+  [types.PROFILE_SET_ISFOLLOWING]: (state, isFollowing) => {
+    state.profile.isFollowing = isFollowing
   }
 }
 

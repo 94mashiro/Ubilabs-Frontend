@@ -59,6 +59,7 @@ export default {
               showClose: true
             })
             this.editorForm.content.md = ''
+            this.$store.dispatch('question/setIsAnswered', { isAnswered: true })
             this.$store.dispatch('question/getQuestion', {questionId: this.$route.params.id, userId: this.profile && this.profile._id})
           } else {
             this.$message.error({

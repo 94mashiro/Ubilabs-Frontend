@@ -5,24 +5,27 @@
       <div class="rss-list-wrapper" v-if="rssList.length">
         <div class="list-item" v-for="rss in rssList" :key="rss._id">
           <span v-if="rss.rssType==='comment'">
-            <router-link :to="getProfileLink(rss.author)">{{rss.author.name}}</router-link> 评论了 <router-link :to="getArticleLink(rss.article)">{{rss.article.title}}</router-link>
+            <router-link :to="getProfileLink(rss.author)">{{rss.author.name}}</router-link>  评论了  <router-link :to="getArticleLink(rss.article)">{{rss.article.title}}</router-link>
           </span>
           <span v-if="rss.rssType==='answer'">
-            <router-link :to="getProfileLink(rss.author)">{{rss.author.name}}</router-link> 回答了 <router-link :to="getQuestionLink(rss.question)">{{rss.question.title}}</router-link>
+            <router-link :to="getProfileLink(rss.author)">{{rss.author.name}}</router-link>  回答了  <router-link :to="getQuestionLink(rss.question)">{{rss.question.title}}</router-link>
           </span>
           <span v-if="rss.rssType==='project'">
-            <router-link :to="getProfileLink(rss.leader)">{{rss.leader.name}}</router-link> 创建了项目 <router-link :to="getProjectLink(rss)">{{rss.title}}</router-link>
+            <router-link :to="getProfileLink(rss.leader)">{{rss.leader.name}}</router-link>  创建了项目  <router-link :to="getProjectLink(rss)">{{rss.title}}</router-link>
           </span>
           <span v-if="rss.rssType==='activity'">
-            <router-link :to="getProfileLink(rss.author)">{{rss.author.name}}</router-link> 创建了活动 <router-link :to="getActivityLink(rss)">{{rss.title}}</router-link>
+            <router-link :to="getProfileLink(rss.author)">{{rss.author.name}}</router-link>  创建了活动  <router-link :to="getActivityLink(rss)">{{rss.title}}</router-link>
           </span>
           <span v-if="rss.rssType==='article'">
-            <router-link :to="getProfileLink(rss.author)">{{rss.author.name}}</router-link> 发表文章 <router-link :to="getArticleLink(rss)">{{rss.title}}</router-link>
+            <router-link :to="getProfileLink(rss.author)">{{rss.author.name}}</router-link>  发表文章  <router-link :to="getArticleLink(rss)">{{rss.title}}</router-link>
           </span>
           <span v-if="rss.rssType==='question'">
-            <router-link :to="getProfileLink(rss.author)">{{rss.author.name}}</router-link> 提出问题 <router-link :to="getQuestionLink(rss)">{{rss.title}}</router-link>
+            <router-link :to="getProfileLink(rss.author)">{{rss.author.name}}</router-link>  提出问题  <router-link :to="getQuestionLink(rss)">{{rss.title}}</router-link>
           </span>
         </div>
+      </div>
+      <div class="no-rss-wrapper" v-if="!rssList.length">
+        暂无动态
       </div>
     </div>
   </el-card>
@@ -58,14 +61,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.rss-card-wrapper {
+  margin-bottom: 20px;
+}
 .list-item {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
   font-size: 14px;
-  line-height: 1.2;
+  line-height: 1.3;
 
   a {
-    color: #333;
+    color: #225a9e;
     text-decoration: none;
+    font-weight: 500;
   }
+}
+.list-item:not(:last-child) {
+  border-bottom: 1px solid #ebebeb;
 }
 </style>

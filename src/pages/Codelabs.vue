@@ -1,7 +1,7 @@
 <template>
-<el-container class="codelabs-container" v-if="!isLoadingCodelabsList">
+<el-container class="codelabs-container">
   <el-main>
-    <codelabs-list :list="codelabs"></codelabs-list>
+    <codelabs-list :list="codelabs" v-loading="isLoadingCodelabsList" element-loading-background="#fff"></codelabs-list>
   </el-main>
   <el-aside width="280px">
     <el-main>
