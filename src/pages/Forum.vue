@@ -10,9 +10,9 @@
     <el-aside width="280px">
       <el-main>
         <profile-card v-if="isLogin"></profile-card>
-        <rss-card v-if="isLogin"></rss-card>
         <intro-card v-if="!isLogin"></intro-card>
         <node-chooser v-if="displayMode==='question'"></node-chooser>
+        <rss-card v-if="isLogin"></rss-card>
       </el-main>
     </el-aside>
   </el-container>

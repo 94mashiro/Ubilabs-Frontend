@@ -1,8 +1,7 @@
 <template>
 <div class="project-detail-progress-wrapper">
   <div class="progress-header-wrapper">
-    <el-steps :active="1+finishedMilestone.length" finish-status="success" align-center>
-      <el-step title="项目启动" class="tooltip-name"></el-step>
+    <el-steps :active="finishedMilestone.length" finish-status="success" align-center>
       <el-step v-for="milestone in project.milestones" :key="milestone._id">
         <div slot="title">
           <el-tooltip>
@@ -11,13 +10,10 @@
           </el-tooltip>
         </div>
         <div slot="description">
-          <!-- <span>{{milestone.description}}</span> -->
-          <!-- <br> -->
           <span v-if="!milestone.isFinished">预计日期: {{getI18nDate(milestone.deadline)}}</span>
           <span v-if="milestone.isFinished">完成日期: {{getI18nDate(milestone.finishedDate)}}</span>
         </div>
       </el-step>
-      <el-step title="项目结束" class="tooltip-name"></el-step>
     </el-steps>
   </div>
 </div>

@@ -1,7 +1,7 @@
 <template>
 <div class="project-member-wrapper">
   <author-info :author="member" :key="member._id"></author-info>
-  <div :id="'chart-'+this.member._id.substring(0, 5)"></div>
+  <div :id="'chart-'+this.member._id.substring(0, 8)"></div>
 </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
     if (this.chartData) {
       const chart = CalendarHeatMap()
               .data(this.chartData)
-              .selector(`#chart-${this.member._id.substring(0, 5)}`)
+              .selector(`#chart-${this.member._id.substring(0, 8)}`)
               .colorRange(['#EBEDF0', '#1D602A'])
               .tooltipEnabled(true)
               .legendEnabled(false)

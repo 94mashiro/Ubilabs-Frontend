@@ -19,6 +19,7 @@
         </el-collapse-item>
         <el-collapse-item name="leader">
           <div slot="title" class="collapse-title">项目负责人</div>
+          <avatar :src="project.leader.avatar" :username="project.leader.name"></avatar>
           <span>{{project.leader.name}}</span>
         </el-collapse-item>
         <el-collapse-item name="story">
@@ -33,8 +34,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Avatar from 'vue-avatar'
 export default {
   name: 'projectDetailIntro',
+  components: {
+    Avatar
+  },
   computed: {
     ...mapGetters({
       project: 'project/project'

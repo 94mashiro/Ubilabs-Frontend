@@ -1,11 +1,13 @@
 <template>
-  <el-card header="节点选择">
-    <div class="question-nodes-wrapper" v-loading="isLoadingQuestionNodes" element-loading-background="#ffffff">
-      <div v-for="node in questionNodes" :key="node._id" class="node-wrapper">
-        <el-button plain round size="small" class="very-small" :class="{'selected-node': node._id === displayNode}" @click="selectDisplayNode(node._id)">{{node.name}}</el-button>
+  <div class="node-chooser-wrapper">
+    <el-card header="节点选择">
+      <div class="question-nodes-wrapper" v-loading="isLoadingQuestionNodes" element-loading-background="#ffffff">
+        <div v-for="node in questionNodes" :key="node._id" class="node-wrapper">
+          <el-button plain round size="small" class="very-small" :class="{'selected-node': node._id === displayNode}" @click="selectDisplayNode(node._id)">{{node.name}}</el-button>
+        </div>
       </div>
-    </div>
-  </el-card>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -39,6 +41,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.node-chooser-wrapper {
+  margin-bottom: 20px;
+}
 
 .question-nodes-wrapper {
   display: flex;
