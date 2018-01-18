@@ -7,19 +7,26 @@
         </el-carousel-item>
       </el-carousel>
     </div>
-    <div class="project-title">
-      <span>项目名称: {{project.title}}</span>
-    </div>
-    <div class="project-node">
-      <span>选用技术: {{nodeString}}</span>
-    </div>
-    <div class="project-leader">
-      <span>项目负责人: {{project.leader.name}}</span>
-    </div>
-    <div class="project-story">
-      <span>项目故事版:</span>
-      <div class="markdown-body project-story-markdown" v-html="project.story.html" v-if="project.story"></div>
-      <span v-if="!project.story">暂无</span>
+    <div class="project-collapse-wrapper">
+      <el-collapse v-model="activeNames">
+        <el-collapse-item name="title">
+          <div slot="title" class="collapse-title">项目名称</div>
+          <span>{{project.title}}</span>
+        </el-collapse-item>
+        <el-collapse-item name="node">
+          <div slot="title" class="collapse-title">选用技术</div>
+          <el-tag v-for="node in this.project.node" :key="node._id" size="small" class="node-tag"><span>{{node.name}}</span></el-tag>
+        </el-collapse-item>
+        <el-collapse-item name="leader">
+          <div slot="title" class="collapse-title">项目负责人</div>
+          <span>{{project.leader.name}}</span>
+        </el-collapse-item>
+        <el-collapse-item name="story">
+          <div slot="title" class="collapse-title">项目故事版</div>
+          <div class="markdown-body project-story-markdown" v-html="project.story.html" v-if="project.story"></div>
+          <span v-if="!project.story">暂无</span>
+        </el-collapse-item>
+      </el-collapse>
     </div>
   </div>
 </template>
@@ -43,6 +50,11 @@ export default {
       }
       return '暂无填写'
     }
+  },
+  data () {
+    return {
+      activeNames: ['title', 'node', 'leader', 'story']
+    }
   }
 }
 </script>
@@ -57,8 +69,26 @@ export default {
     justify-content: center;
   }
 
+  .project-collapse-wrapper {
+    padding-top: 20px;
+    width: 800px;
+    margin: 0 auto;
+    span {
+       font-size: 16px;
+    }
+  }
+
   .project-title {
     margin-top: 20px;
+  }
+
+  .node-tag {
+    margin-right: 10px;
+  }
+
+  .collapse-title {
+    font-size: 18px;
+    font-weight: 600;
   }
 
   .project-title, .project-node, .project-leader, .project-story {

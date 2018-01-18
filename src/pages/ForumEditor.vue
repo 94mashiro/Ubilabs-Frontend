@@ -3,13 +3,6 @@
   <card>
     <div class="editor-container">
       <el-form :model="editorForm">
-        <el-form-item>
-          <el-upload method="POST" class="editor-picture-uploader" action="/api/system/postPicture" name="file" :show-file-list="false" :on-success="handleUploadSuccess">
-            <i class="el-icon-upload icon"></i>
-            <div class="el-upload__text">点击上传题图</div>
-            <i class="el-icon delete icon" style="display: none" @click="deleteImage"></i>
-          </el-upload>
-        </el-form-item>
         <el-form-item class="editor-title-input">
           <el-input v-model="editorForm.title" placeholder="请输入标题"></el-input>
         </el-form-item>

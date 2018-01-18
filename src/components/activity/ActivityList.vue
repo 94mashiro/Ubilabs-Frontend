@@ -48,7 +48,7 @@ export default {
   margin-top: 40px;
 
   span {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 </style>

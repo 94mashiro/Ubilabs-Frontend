@@ -65,8 +65,6 @@ export default {
   margin-bottom: 20px;
 }
 .list-item {
-  margin-bottom: 8px;
-  padding-bottom: 8px;
   font-size: 14px;
   line-height: 1.3;
 
@@ -78,5 +76,7 @@ export default {
 }
 .list-item:not(:last-child) {
   border-bottom: 1px solid #ebebeb;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
 }
 </style>

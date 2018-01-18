@@ -1,7 +1,7 @@
 <template>
 <div class="filter-toolbar-wrapper">
   <div class="filter-mode-wrapper">
-    <el-radio-group v-model="filterMode">
+    <el-radio-group v-model="filterMode" size="mini">
       <el-radio-button label="all">全部</el-radio-button>
       <el-radio-button label="now">进行中</el-radio-button>
       <el-radio-button label="before">已结束</el-radio-button>

@@ -2,11 +2,13 @@
   <div class="project-detail-member-wrapper">
     <project-detail-add-member-dialog></project-detail-add-member-dialog>
     <div class="project-leader-toolbar">
-      <div class="member-rank"><icon name="people_fill" :scale="2" class="icon"></icon>项目负责人</div>
+      <!-- <div class="member-rank"><icon name="people_fill" :scale="2" class="icon"></icon>项目负责人</div> -->
+      <el-tag type="info"><icon name="people_fill" :scale="2" class="icon"></icon>项目负责人</el-tag>
     </div>
     <project-detail-member-card :isLeader="true" :member="project.leader"></project-detail-member-card>
     <div class="project-member-toolbar">
-      <div class="member-rank"><icon name="group_fill" :scale="2" class="icon"></icon>项目组成员</div>
+      <!-- <div class="member-rank"><icon name="group_fill" :scale="2" class="icon"></icon>项目组成员</div> -->
+      <el-tag type="info"><icon name="group_fill" :scale="2" class="icon"></icon>项目组成员</el-tag>
     </div>
     <div v-for="member in project.member" :key="member._id">
       <project-detail-member-card :isLeader="false" :member="member"></project-detail-member-card>
@@ -58,7 +60,8 @@ export default {
 }
 .icon {
   margin-right: 3px;
-  vertical-align: bottom;
+  margin-bottom: 5px;
+  vertical-align: middle;
 }
 .project-member-toolbar {
   margin-bottom: 20px;

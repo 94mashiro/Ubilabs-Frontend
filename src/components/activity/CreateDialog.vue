@@ -27,14 +27,18 @@
 </template>
 
 <script>
-import { getNodes, postActivity } from '@/store/api'
+import { postActivity } from '@/store/api'
 import { markdownEditorConfigs } from '@/utils/config'
 import ImageUploader from '@/components/ImageUploader'
+import { mapGetters } from 'vuex'
 export default {
   name: 'activityCreateDialog',
   components: {
     ImageUploader
   },
+  computed: mapGetters({
+    questionNodes: 'forum/questionNodes'
+  }),
   data () {
     return {
       configs: {},
@@ -52,14 +56,17 @@ export default {
   },
   created () {
     this.configs = markdownEditorConfigs
-    getNodes().then((results) => {
-      if (results.success) {
-        this.nodes = results.result.map(node => {
-          return { value: node._id, label: node.name }
-        })
-      } else {
-        throw new Error(results.message)
-      }
+    // getNodes().then((results) => {
+    //   if (results.success) {
+    //     this.nodes = results.result.map(node => {
+    //       return { value: node._id, label: node.name }
+    //     })
+    //   } else {
+    //     throw new Error(results.message)
+    //   }
+    // })
+    this.nodes = this.questionNodes.map(node => {
+      return { value: node._id, label: node.name }
     })
   },
   methods: {
