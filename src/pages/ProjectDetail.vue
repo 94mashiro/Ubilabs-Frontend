@@ -5,7 +5,7 @@
       <project-detail-intro></project-detail-intro>
     </el-tab-pane>
     <el-tab-pane name="progress" label="项目进度">
-      <project-detail-progress></project-detail-progress>
+      <project-detail-progress v-if="!isLoadingProject"></project-detail-progress>
     </el-tab-pane>
     <el-tab-pane name="git" label="项目代码">
       <project-detail-git></project-detail-git>

@@ -66,7 +66,7 @@ export default {
   methods: {
     changeSwitch: function (newValue) {
       if (newValue === false) {
-        delete this.milestone.finishDate
+        this.milestone.finishDate = null
       }
     },
     submitForm: function () {

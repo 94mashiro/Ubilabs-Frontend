@@ -9,6 +9,7 @@ const state = {
     __v: '',
     _id: '',
     createdAt: '',
+    chartOptions: [],
     description: '',
     gitId: 0,
     gitSSH: '',
@@ -53,6 +54,36 @@ const getters = {
 }
 
 const actions = {
+  initState: ({ commit }) => {
+    const initState = {
+      __v: '',
+      _id: '',
+      createdAt: '',
+      chartOptions: [],
+      description: '',
+      gitId: 0,
+      gitSSH: '',
+      gitTitle: '',
+      imageUrls: [],
+      leader: {
+        _id: '',
+        avatar: '',
+        email: '',
+        name: ''
+      },
+      member: [],
+      milestones: [],
+      node: [],
+      notes: [],
+      story: {
+        md: '',
+        html: ''
+      },
+      title: '',
+      updatedAt: ''
+    }
+    commit(types.PROJECT_SET_PROJECT, initState)
+  },
   setIsCreateDialogVisible: ({ commit }, { isCreateDialogVisible }) => {
     commit(types.PROJECT_SET_ISCREATEDIALOGVISIBLE, isCreateDialogVisible)
   },
@@ -77,7 +108,37 @@ const actions = {
       dispatch('setIsLoadingProjectList', { isLoadingProjectList: false })
     }
   },
+  setChartOptions: ({ commit, state }) => {
+    const getChartDateFormat = function (date) {
+      const dateObject = new Date(date)
+      return `${dateObject.getFullYear()}-${dateObject.getMonth() + 1}-${dateObject.getDate()}`
+    }
+    const milestones = state.project.milestones
+    const finishedMilestones = [].concat(milestones.filter(milestone => {
+      return milestone.isFinished
+    })).sort((a, b) => {
+      return new Date(a.finishDate) - new Date(b.finishDate)
+    })
+    const unfinishedMilestones = milestones.filter(milestone => {
+      return !milestone.isFinished
+    }).sort((a, b) => {
+      return new Date(a.deadline) - new Date(b.deadline)
+    })
+    const sortedMilestones = finishedMilestones.concat(unfinishedMilestones)
+    const dataArray = [
+      ['时间节点', '计划完成日期', '实际完成日期']
+    ]
+    sortedMilestones.forEach(ms => {
+      if (ms.isFinished) {
+        dataArray.push([ms.name, getChartDateFormat(ms.deadline), getChartDateFormat(ms.finishDate)])
+      } else {
+        dataArray.push([ms.name, getChartDateFormat(ms.deadline)])
+      }
+    })
+    commit(types.PROJECT_SET_CHARTOPTIONS, dataArray)
+  },
   getProject: async ({ commit, dispatch }, { projectId }) => {
+    dispatch('initState')
     dispatch('setIsLoadingProject', { isLoadingProject: true })
     try {
       const projectBody = await api.getProject({ id: projectId })
@@ -85,8 +146,9 @@ const actions = {
       const milestonesBody = await api.getProjectMilestones({ project_id: projectId })
       if (projectBody.success && notesBody.success && milestonesBody.success) {
         commit(types.PROJECT_SET_PROJECT, projectBody.result)
-        dispatch('setProjectNotes', { projectNotes: notesBody.result })
-        dispatch('setProjectMilestones', { projectMilestones: milestonesBody.result })
+        await dispatch('setProjectNotes', { projectNotes: notesBody.result })
+        await dispatch('setProjectMilestones', { projectMilestones: milestonesBody.result })
+        await dispatch('setChartOptions')
       }
     } catch (err) {
       console.error(err)
@@ -125,7 +187,7 @@ const mutations = {
     state.projects = projects
   },
   [types.PROJECT_SET_PROJECT]: (state, project) => {
-    state.project = project
+    state.project = {...state.project, ...project}
   },
   [types.PROJECT_SET_ISLOADINGPROJECT]: (state, isLoadingProject) => {
     state.isLoadingProject = isLoadingProject
@@ -147,6 +209,9 @@ const mutations = {
   },
   [types.PROJECT_SET_PROJECTMILESTONES]: (state, projectMilestones) => {
     state.project.milestones = projectMilestones
+  },
+  [types.PROJECT_SET_CHARTOPTIONS]: (state, chartOptions) => {
+    state.project.chartOptions = chartOptions
   }
 }
 

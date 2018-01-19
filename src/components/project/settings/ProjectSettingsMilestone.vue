@@ -2,8 +2,8 @@
 <div class="project-settings-milestone-wrapper">
   <project-settings-add-milestone-dialog></project-settings-add-milestone-dialog>
   <project-settings-modify-milestone-dialog :modifyMilestone="modifyMilestone"></project-settings-modify-milestone-dialog>
-  <div class="milestone-settings-header">
-    <span>该项目目前共设置了 {{project.milestones.length}} 个里程碑，已完成 {{finishedMilestone.length}} 个，未完成 {{unfinishedMilestone.length}} 个。</span>
+  <div class="milestone-settings-header" v-if="project.milestones">
+    <span>该项目目前共设置了 {{project.milestones.length || 0}} 个里程碑，已完成 {{finishedMilestone.length}} 个，未完成 {{unfinishedMilestone.length}} 个。</span>
     <el-button type="text" icon="el-icon-plus" style="padding: 0" @click="showAddDialog()">添加里程碑</el-button>
   </div>
   <el-table :data="project.milestones">
@@ -75,7 +75,7 @@ export default {
     },
     getI18nDate: function (date) {
       moment.locale('zh-cn')
-      return date === undefined ? '暂未完成' : moment(date).format('LL')
+      return date === (undefined || null) ? '暂未完成' : moment(date).format('LL')
     },
     handleDelete: async function (milestone) {
       if (confirm('你确定要删除该项目里程碑？')) {

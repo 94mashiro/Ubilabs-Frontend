@@ -8,13 +8,13 @@ import Icon from 'vue-svg-icon/Icon.vue'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './store'
 import VueSimplemde from 'vue-simplemde'
-// import ECharts from 'vue-echarts/components/ECharts.vue'
+import ECharts from 'vue-echarts/components/ECharts.vue'
 /* eslint-disable */
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueSimplemde)
 Vue.component('icon', Icon)
-// Vue.component('chart', ECharts)
+Vue.component('chart', ECharts)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
