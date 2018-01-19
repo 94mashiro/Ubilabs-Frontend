@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { getNodes, postQuestion } from '@/store/api'
+import { postQuestion } from '@/store/api'
 import { markdownEditorConfigs } from '@/utils/config'
 import { mapGetters } from 'vuex'
 export default {
@@ -36,7 +36,8 @@ export default {
       }
     },
     ...mapGetters({
-      displayNode: 'forum/displayNode'
+      displayNode: 'forum/displayNode',
+      questionNodes: 'forum/questionNodes'
     })
   },
   data () {
@@ -91,14 +92,8 @@ export default {
     this.configs = markdownEditorConfigs
   },
   mounted () {
-    getNodes().then((results) => {
-      if (results.success) {
-        this.nodes = results.result.map(node => {
-          return { value: node._id, label: node.name }
-        })
-      } else {
-        throw new Error(results.message)
-      }
+    this.nodes = this.questionNodes.map(node => {
+      return { value: node._id, label: node.name }
     })
   }
 }

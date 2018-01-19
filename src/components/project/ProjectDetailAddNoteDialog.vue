@@ -1,10 +1,11 @@
 <template>
 <div class="add-note-wrapper">
   <el-dialog title="添加笔记" :visible.sync="isAddNoteDialogVisible">
-    <h1 class="select-description">请选择您需要添加的文章作为项目笔记：</h1>
-    <el-select v-model="postBody.articleId" placeholder="选择文章" style="width: 100%">
+    <span>请选择您需要添加的文章作为项目笔记：</span>
+    <el-select v-model="postBody.articleId" placeholder="选择文章" style="width: 100%" class="select-description">
       <el-option v-for="article in articles" :key="article.value" :label="article.label" :value="article.value"></el-option>
     </el-select>
+    <span class="">如果还没写，<el-button type="text" class="nav-editor" @click="navToEditor">点击</el-button></el-button>跳转到文章编辑器。</span>
     <div slot="footer"><el-button type="primary" @click="submitForm">添加</el-button></div>
   </el-dialog>
 </div>
@@ -58,6 +59,10 @@ export default {
     }
   },
   methods: {
+    navToEditor: function () {
+      this.isAddNoteDialogVisible = false
+      this.$router.push('/forum/editor')
+    },
     submitForm: async function () {
       if (!this.postBody.projectId || !this.postBody.articleId) {
         this.$message.error('请选择文章后再进行提交。')
@@ -82,7 +87,13 @@ export default {
 
 <style lang="scss" scoped>
 .select-description {
-  margin-bottom: 10px;
+  margin: 10px 0 30px;
+}
+
+.nav-editor {
+  color: #295d9d;
+  padding-right: 3px;
+  font-weight: 600;
 }
 </style>
 

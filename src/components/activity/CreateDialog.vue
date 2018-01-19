@@ -5,12 +5,12 @@
       <el-input v-model="activityForm.title" placeholder="请输入活动名称"></el-input>
     </el-form-item>
     <el-form-item label="活动类型">
-      <el-select v-model="activityForm.node" placeholder="请选择活动类型" filterable>
+      <el-select v-model="activityForm.node" placeholder="请选择活动类型" filterable style="width:100%">
         <el-option v-for="node in nodes" :key="node.value" :label="node.label" :value="node.value"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="开始日期">
-      <el-date-picker v-model="activityForm.startDate" placeholder="请选择活动开始日期" type="date"></el-date-picker>
+      <el-date-picker v-model="activityForm.startDate" placeholder="请选择活动开始日期" type="date" style="width:100%"></el-date-picker>
     </el-form-item>
     <el-form-item label="活动描述">
       <markdown-editor :configs="configs" v-model="activityForm.content.md"></markdown-editor>
@@ -27,18 +27,18 @@
 </template>
 
 <script>
-import { postActivity } from '@/store/api'
+import { postActivity, getNodes } from '@/store/api'
 import { markdownEditorConfigs } from '@/utils/config'
 import ImageUploader from '@/components/ImageUploader'
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 export default {
   name: 'activityCreateDialog',
   components: {
     ImageUploader
   },
-  computed: mapGetters({
-    questionNodes: 'forum/questionNodes'
-  }),
+  // computed: mapGetters({
+  //   questionNodes: 'forum/questionNodes'
+  // }),
   data () {
     return {
       configs: {},
@@ -56,15 +56,15 @@ export default {
   },
   created () {
     this.configs = markdownEditorConfigs
-    // getNodes().then((results) => {
-    //   if (results.success) {
-    //     this.nodes = results.result.map(node => {
-    //       return { value: node._id, label: node.name }
-    //     })
-    //   } else {
-    //     throw new Error(results.message)
-    //   }
-    // })
+    getNodes().then((results) => {
+      if (results.success) {
+        this.nodes = results.result.map(node => {
+          return { value: node._id, label: node.name }
+        })
+      } else {
+        throw new Error(results.message)
+      }
+    })
     this.nodes = this.questionNodes.map(node => {
       return { value: node._id, label: node.name }
     })

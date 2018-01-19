@@ -2,7 +2,7 @@
 <div class="project-detail-progress-wrapper">
   <div class="progress-header-wrapper">
     <el-steps :active="finishedMilestone.length" finish-status="success" align-center>
-      <el-step v-for="milestone in project.milestones" :key="milestone._id">
+      <el-step v-for="milestone in sortedMilestone" :key="milestone._id">
         <div slot="title">
           <el-tooltip>
             <div slot="content">{{milestone.description}}</div>
@@ -11,7 +11,7 @@
         </div>
         <div slot="description">
           <span v-if="!milestone.isFinished">预计日期: {{getI18nDate(milestone.deadline)}}</span>
-          <span v-if="milestone.isFinished">完成日期: {{getI18nDate(milestone.finishedDate)}}</span>
+          <span v-if="milestone.isFinished">完成日期: {{getI18nDate(milestone.finishDate)}}</span>
         </div>
       </el-step>
     </el-steps>
@@ -32,11 +32,30 @@ export default {
       return this.project.milestones.filter(milestone => {
         return milestone.isFinished
       })
+    },
+    sortedMilestone: function () {
+      // return this.project.milestones.sort((a, b) => {
+      //   return new Date(a.finishDate) - new Date(b.finishDate)
+      // })
+      const finishedMilestone = this.project.milestones.filter(milestone => {
+        return milestone.isFinished
+      })
+      const unfinishedMilestone = this.project.milestones.filter(milestone => {
+        return !milestone.isFinished
+      })
+      finishedMilestone.sort((a, b) => {
+        return new Date(a.finishDate) - new Date(b.finishDate)
+      })
+      unfinishedMilestone.sort((a, b) => {
+        return new Date(a.deadline) - new Date(b.deadline)
+      })
+      return [].concat(finishedMilestone).concat(unfinishedMilestone)
     }
   },
   methods: {
     getI18nDate: function (date) {
-      moment.locale('zh-cn')
+      console.log(this.sortedMilestone)
+      // moment.locale('zh-cn')
       return moment(date).format('LL')
     }
   }
