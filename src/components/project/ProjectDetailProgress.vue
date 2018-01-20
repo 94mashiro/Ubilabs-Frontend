@@ -96,19 +96,21 @@ export default {
     }
   },
   mounted () {
-    this.myChart = echarts.init(document.getElementById('milestone-chart'))
-    if (this.project.chartOptions.length > 0) {
-      this.myChart.setOption({
-        dataset: {
-          source: this.project.chartOptions
-        },
-        xAxis: {type: 'category'},
-        yAxis: {type: 'time'},
-        series: [
-          {type: 'line'},
-          {type: 'line'}
-        ]
-      })
+    if (this.project.milestones.length > 0) {
+      this.myChart = echarts.init(document.getElementById('milestone-chart'))
+      if (this.project.chartOptions.length > 0) {
+        this.myChart.setOption({
+          dataset: {
+            source: this.project.chartOptions
+          },
+          xAxis: {type: 'category'},
+          yAxis: {type: 'time'},
+          series: [
+            {type: 'line'},
+            {type: 'line'}
+          ]
+        })
+      }
     }
   },
   methods: {
