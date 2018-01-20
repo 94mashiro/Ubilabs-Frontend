@@ -1,10 +1,11 @@
 <template>
   <el-container class="container" v-loading="isLoading">
-      <question-content-header></question-content-header>
-      <question-content-main v-if="!isLoading"></question-content-main>
-      <el-dialog title="评论" :visible.sync="isAnswerCommentVisible" custom-class="answer-comment-dialog" top="5vh">
-        <answer-comment-dialog></answer-comment-dialog>
-      </el-dialog>
+    <modify-question-dialog></modify-question-dialog>
+    <question-content-header></question-content-header>
+    <question-content-main v-if="!isLoading"></question-content-main>
+    <el-dialog title="评论" :visible.sync="isAnswerCommentVisible" custom-class="answer-comment-dialog" top="5vh">
+      <answer-comment-dialog></answer-comment-dialog>
+    </el-dialog>
   </el-container>
 </template>
 
@@ -12,13 +13,15 @@
 import QuestionContentHeader from '@/components/forum/question/ContentHeader'
 import QuestionContentMain from '@/components/forum/question/ContentMain'
 import AnswerCommentDialog from '@/components/forum/question/AnswerCommentDialog'
+import ModifyQuestionDialog from '@/components/forum/question/ModifyQuestionDialog'
 import { mapGetters } from 'vuex'
 export default {
   name: 'question',
   components: {
     QuestionContentHeader,
     QuestionContentMain,
-    AnswerCommentDialog
+    AnswerCommentDialog,
+    ModifyQuestionDialog
   },
   computed: {
     ...mapGetters({

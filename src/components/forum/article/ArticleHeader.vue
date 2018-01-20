@@ -5,9 +5,14 @@
   </div>
   <h1 class="article-title">{{article.title}}</h1>
 
-  <div class="article-header-meta">
-    <author-info :author="article.author" :mini="true" :avatarSize="22" class="article-header-author"></author-info>
-    <span>发布于 {{createDate}}</span>
+  <div class="article-header">
+    <div class="article-header-meta">
+      <author-info :author="article.author" :mini="true" :avatarSize="22" class="article-header-author"></author-info>
+      <span>发布于 {{createDate}}</span>
+    </div>
+    <div>
+      <el-button type="primary" size="mini" @click="navToEditor">编辑文章</el-button>
+    </div>
   </div>
 </div>
 </template>
@@ -26,6 +31,12 @@ export default {
       moment.locale('zh-cn')
       return moment(this.article.createdAt).startOf('day').fromNow()
     }
+  },
+  methods: {
+    navToEditor: async function () {
+      await this.$store.dispatch('article/setSelectedArticle', { selectedArticle: this.article })
+      this.$router.push('/forum/editor')
+    }
   }
 }
 </script>
@@ -42,14 +53,20 @@ export default {
   .article-header-author {
     margin-top: 5px;
   }
-  .article-header-meta {
-    font-size: 14px;
+  .article-header {
     display: flex;
+    justify-content: space-between;
 
-    span {
-      margin: 9px 0 0 5px;
+    .article-header-meta {
+      font-size: 14px;
+      display: flex;
+
+      span {
+        margin: 9px 0 0 5px;
+      }
     }
   }
+
 }
 
 </style>

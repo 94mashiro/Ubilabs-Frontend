@@ -398,3 +398,21 @@ export const getRss = (params) => {
     return res.data
   })
 }
+
+export const updateQuestion = (data) => {
+  return axios.patch(
+    '/api/forum/question',
+    data
+  ).then((res) => {
+    return res.data
+  })
+}
+
+export const updateArticle = (data) => {
+  return axios.patch(
+    '/api/forum/article',
+    data
+  ).then((res) => {
+    return res.data
+  })
+}

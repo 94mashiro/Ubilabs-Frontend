@@ -8,9 +8,7 @@ const state = {
   questions: [],
   articles: [],
   isLoadingList: false,
-  isQuestionDialogVisible: false,
-  totalQuestionsPages: 1,
-  totalArticlesPages: 1
+  isQuestionDialogVisible: false
 }
 
 const getters = {

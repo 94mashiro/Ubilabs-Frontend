@@ -5,14 +5,16 @@ const state = {
   article: {},
   comments: [],
   isLoading: false,
-  isCommentEditorDialogVisible: false
+  isCommentEditorDialogVisible: false,
+  selectedArticle: {}
 }
 
 const getters = {
   article: state => state.article,
   comments: state => state.comments,
   isLoading: state => state.isLoading,
-  isCommentEditorDialogVisible: state => state.isCommentEditorDialogVisible
+  isCommentEditorDialogVisible: state => state.isCommentEditorDialogVisible,
+  selectedArticle: state => state.selectedArticle
 }
 
 const actions = {
@@ -34,6 +36,9 @@ const actions = {
   },
   setIsCommentEditorDialogVisible: ({ commit }, { isCommentEditorDialogVisible }) => {
     commit(types.ARTICLE_SET_ISCOMMENTEDITORDIALOGVISIBLE, isCommentEditorDialogVisible)
+  },
+  setSelectedArticle: ({ commit }, { selectedArticle }) => {
+    commit(types.ARTICLE_SET_SELECTEDARTICLE, selectedArticle)
   }
 }
 
@@ -49,6 +54,15 @@ const mutations = {
   },
   [types.ARTICLE_SET_ISCOMMENTEDITORDIALOGVISIBLE]: (state, isCommentEditorDialogVisible) => {
     state.isCommentEditorDialogVisible = isCommentEditorDialogVisible
+  },
+  [types.ARTICLE_SET_SELECTEDARTICLE]: (state, selectedArticle) => {
+    state.selectedArticle = selectedArticle
+  },
+  [types.ARTICLE_UPDATE_TITLE]: (state, title) => {
+    state.selectedArticle.title = title
+  },
+  [types.ARTICLE_UPDATE_CONTENT]: (state, content) => {
+    state.selectedArticle.content.md = content
   }
 }
 

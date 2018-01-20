@@ -2,15 +2,18 @@
 <div class="container">
   <card>
     <div class="editor-container">
-      <el-form :model="editorForm">
+      <el-form :model="isModifyArticle ? selectedArticle : editorForm">
         <el-form-item class="editor-title-input">
-          <el-input v-model="editorForm.title" placeholder="请输入标题"></el-input>
+          <el-input v-model="editorForm.title" placeholder="请输入标题" v-if="!isModifyArticle"></el-input>
+          <el-input v-model="selectedArticle.title" placeholder="请输入标题" v-if="isModifyArticle"></el-input>
         </el-form-item>
         <el-form-item>
-          <markdown-editor :configs="configs" class="forum-editor" v-model="editorForm.content.md"></markdown-editor>
+          <markdown-editor :configs="configs" class="forum-editor" v-model="editorForm.content.md" v-if="!isModifyArticle"></markdown-editor>
+          <markdown-editor :configs="configs" class="forum-editor" v-model="selectedArticle.content.md" v-if="isModifyArticle"></markdown-editor>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm">发布</el-button>
+          <el-button type="primary" @click="submitForm" v-if="!isModifyArticle">发布</el-button>
+          <el-button type="primary" @click="submitEditForm" v-if="isModifyArticle">修改</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -21,12 +24,38 @@
 <script>
 import Card from '@/components/Card'
 import $ from 'jquery'
-import { postArticle } from '@/store/api'
+import { postArticle, updateArticle } from '@/store/api'
 import { markdownEditorConfigs } from '@/utils/config'
+import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 export default {
   name: 'questionEditor',
   components: {
     Card
+  },
+  computed: {
+    ...mapGetters({
+      selectedArticle: 'article/selectedArticle'
+    }),
+    'selectedArticle.title': {
+      get: function () {
+        return this.$store.state.article.selectedArticle.title
+      },
+      set: function (newValue) {
+        this.$store.commit(`article/${types.ARTICLE_UPDATE_TITLE}`, newValue)
+      }
+    },
+    'selectedArticle.content.md': {
+      get: function () {
+        return this.$store.state.article.selectedArticle.content.md
+      },
+      set: function (newValue) {
+        this.$store.commit(`article/${types.ARTICLE_UPDATE_CONTENT}`, newValue)
+      }
+    },
+    'isModifyArticle': function () {
+      return JSON.stringify(this.selectedArticle) !== '{}'
+    }
   },
   data () {
     return {
@@ -64,12 +93,29 @@ export default {
           }
         })
     },
+    submitEditForm: async function () {
+      try {
+        const body = await updateArticle(this.selectedArticle)
+        if (!body.success) {
+          throw body.message
+        } else {
+          this.$notify.success('文章修改成功。')
+          this.$router.push(`/forum/article/${this.selectedArticle._id}`)
+        }
+      } catch (err) {
+        this.$notify.error(err)
+      }
+    },
     deleteImage: function () {
       console.log('delete it')
     }
   },
   created () {
     this.configs = markdownEditorConfigs
+    console.log(this.selectedArticle)
+  },
+  destroyed () {
+    this.$store.dispatch('article/setSelectedArticle', { selectedArticle: {} })
   }
 }
 </script>

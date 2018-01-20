@@ -7,9 +7,11 @@ const state = {
   isShowEditor: false,
   isAnswered: false,
   isLoading: false,
-  selectedAnswer: {},
+  selectedAnswer: false,
   isAnswerCommentVisible: false,
-  answerComments: []
+  answerComments: [],
+  isModifyQuestionDialogVisible: false,
+  selectedQuestion: {}
 }
 
 const getters = {
@@ -20,17 +22,24 @@ const getters = {
   isLoading: state => state.isLoading,
   selectedAnswer: state => state.selectedAnswer,
   isAnswerCommentVisible: state => state.isAnswerCommentVisible,
-  answerComments: state => state.answerComments
+  answerComments: state => state.answerComments,
+  isModifyQuestionDialogVisible: (state) => state.isModifyQuestionDialogVisible,
+  selectedQuestion: state => state.selectedQuestion
 }
 
 const actions = {
-  getQuestion: async ({ commit, dispatch }, { questionId, userId }) => {
+  getQuestion: async ({ commit, dispatch, rootState }, { questionId, userId }) => {
     dispatch('setIsLoading', { isLoading: true })
     dispatch('setIsShowEditor', {isShowEditor: false})
     dispatch('setSelectedAnswer', { selectedAnswer: {} })
     dispatch('setIsAnswerCommentVisible', { isAnswerCommentVisible: false })
+    dispatch('setIsModifyQuestionDialogVisible', { isModifyQuestionDialogVisible: false })
+    dispatch('setSelectedQuestion', { selectedQuestion: {} })
     dispatch('setIsAnswered', { isAnswered: false })
     try {
+      if (!rootState.forum.questionNodes.length) {
+        dispatch('forum/getQuestionNodes', null, { root: true })
+      }
       const { question } = await api.getQuestion(questionId)
       const { answers } = await api.getAnswers(questionId)
       commit(types.QUESTION_SET_QUESTION, question)
@@ -66,6 +75,17 @@ const actions = {
     const { comments } = await api.getComments(state.selectedAnswer._id)
     console.log(state.selectedAnswer._id, comments)
     commit(types.QUESTION_SET_ANSWERCOMMENTS, comments)
+  },
+  setIsModifyQuestionDialogVisible: ({ commit }, { isModifyQuestionDialogVisible }) => {
+    commit(types.QUESTION_SET_ISMODIFYQUESTIONDIALOGVISIBLE, isModifyQuestionDialogVisible)
+  },
+  setSelectedQuestion: ({ commit }, { selectedQuestion }) => {
+    commit(types.QUESTION_SET_SELECTEDQUESTION, {
+      _id: selectedQuestion._id,
+      title: selectedQuestion.title,
+      content: selectedQuestion.content,
+      node: (selectedQuestion.node && selectedQuestion.node._id) || ''
+    })
   }
 }
 
@@ -93,6 +113,21 @@ const mutations = {
   },
   [types.QUESTION_SET_ANSWERCOMMENTS]: (state, answerComments) => {
     state.answerComments = answerComments
+  },
+  [types.QUESTION_SET_ISMODIFYQUESTIONDIALOGVISIBLE]: (state, isModifyQuestionDialogVisible) => {
+    state.isModifyQuestionDialogVisible = isModifyQuestionDialogVisible
+  },
+  [types.QUESTION_SET_SELECTEDQUESTION]: (state, selectedQuestion) => {
+    state.selectedQuestion = selectedQuestion
+  },
+  [types.QUESTION_UPDATE_TITLE]: (state, title) => {
+    state.selectedQuestion.title = title
+  },
+  [types.QUESTION_UPDATE_CONTENT]: (state, content) => {
+    state.selectedQuestion.content.md = content
+  },
+  [types.QUESTION_UPDATE_NODE]: (state, node) => {
+    state.selectedQuestion.node = node
   }
 }
 
