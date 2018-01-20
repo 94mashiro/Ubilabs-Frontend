@@ -57,6 +57,9 @@ export default {
   created () {
     this.$store.dispatch('project/getProject', { projectId: this.$route.params.id })
   },
+  destroyed () {
+    this.$store.dispatch('project/initState')
+  },
   methods: {
     handleClick: function ({name}) {
       this.$router.push(`/project/${this.project._id}/${name}`)

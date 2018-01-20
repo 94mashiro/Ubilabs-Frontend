@@ -416,3 +416,12 @@ export const updateArticle = (data) => {
     return res.data
   })
 }
+
+export const updateCodelab = (data) => {
+  return axios.patch(
+    '/api/codelabs',
+    data
+  ).then((res) => {
+    return res.data
+  })
+}

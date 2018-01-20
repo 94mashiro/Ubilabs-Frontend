@@ -8,9 +8,7 @@
       <el-button type="primary" @click="showCreateDialog">新建文档</el-button>
     </el-main>
   </el-aside>
-  <el-dialog title="创建新文档" :visible.sync="isCreateDialogVisible">
-    <codelabs-create-dialog></codelabs-create-dialog>
-  </el-dialog>
+  <codelabs-create-dialog></codelabs-create-dialog>
 </el-container>
 </template>
 
@@ -29,6 +27,10 @@ export default {
     CodelabsCreateDialog
   },
   computed: {
+    ...mapGetters({
+      codelabs: 'codelabs/codelabs',
+      isLoadingCodelabsList: 'codelabs/isLoadingCodelabsList'
+    }),
     isCreateDialogVisible: {
       get: function () {
         return this.$store.state.codelabs.isCreateDialogVisible
@@ -36,11 +38,7 @@ export default {
       set: function (newValue) {
         return this.$store.dispatch('codelabs/setIsCreateDialogVisible', { isCreateDialogVisible: newValue })
       }
-    },
-    ...mapGetters({
-      codelabs: 'codelabs/codelabs',
-      isLoadingCodelabsList: 'codelabs/isLoadingCodelabsList'
-    })
+    }
   },
   methods: {
     showCreateDialog: function () {

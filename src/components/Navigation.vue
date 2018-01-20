@@ -1,10 +1,11 @@
 <template>
   <div class="container">
     <el-row :gutter="30">
-      <el-col :span="4" class="nav-brand">
-        <img src="http://via.placeholder.com/146x38?text=logo" alt="Ubilabs Logo">
+      <el-col :span="5" class="nav-brand">
+        <!-- <img src="http://via.placeholder.com/146x38?text=logo" alt="Ubilabs Logo"> -->
+        Ubilabs 在线学习平台
       </el-col>
-      <el-col :span="20">
+      <el-col :span="19">
         <el-menu class="nav" mode="horizontal" @select="handleSelect" :default-active="activePath">
           <el-menu-item index="">项目</el-menu-item>
           <el-menu-item index="codelabs">CodeLabs</el-menu-item>
@@ -87,6 +88,8 @@ export default {
   // border-bottom: 1px solid #eee;
   .nav-brand {
     height: 61px;
+    vertical-align: middle;
+    margin-top: 20px;
     img {
       margin-top: 12px;
     }

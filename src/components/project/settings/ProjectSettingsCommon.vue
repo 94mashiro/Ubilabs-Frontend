@@ -12,6 +12,11 @@
         <el-option v-for="node in nodeList" :key="node.value" :value="node.value" :label="node.label"></el-option>
       </el-select>
     </el-form-item>
+    <el-form-item label="Codelab">
+      <el-select v-model="postBody.codelab" placeholder="" filterable multiple style="width: 100%">
+        <el-option v-for="codelab in codelabList" :key="codelab.value" :value="codelab.value" :label="codelab.label"></el-option>
+      </el-select>
+    </el-form-item>
     <el-form-item label="项目故事版">
       <markdown-editor v-model="postBody.story.md" :configs="configs" class="markdown-editor"></markdown-editor>
     </el-form-item>
@@ -33,12 +38,14 @@ export default {
         title: '',
         description: '',
         node: [],
+        codelab: [],
         story: {
           md: ''
         },
         _id: this.$route.params.id
       },
       nodeList: [],
+      codelabList: [],
       configs: {}
     }
   },
@@ -59,11 +66,15 @@ export default {
   async created () {
     this.configs = markdownEditorConfigs
     const { project } = this.$store.state.project
+    const codelabs = this.$store.state.codelabs.codelabs
     this.postBody.title = project.title
     this.postBody.description = project.description
     this.postBody.story.md = (project.story && project.story.md) || ''
     this.postBody.node = project.node.map(item => {
       return item._id
+    })
+    this.postBody.codelab = project.codelab.map(codelab => {
+      return codelab._id
     })
 
     try {
@@ -73,6 +84,9 @@ export default {
       } else {
         this.nodeList = body.result.map(node => {
           return { value: node._id, label: node.name }
+        })
+        this.codelabList = codelabs.map(codelab => {
+          return { value: codelab._id, label: codelab.title }
         })
       }
     } catch (err) {

@@ -10,6 +10,7 @@ const state = {
     _id: '',
     createdAt: '',
     chartOptions: [],
+    codelab: [],
     description: '',
     gitId: 0,
     gitSSH: '',
@@ -60,6 +61,7 @@ const actions = {
       _id: '',
       createdAt: '',
       chartOptions: [],
+      codelab: [],
       description: '',
       gitId: 0,
       gitSSH: '',
@@ -137,10 +139,12 @@ const actions = {
     })
     commit(types.PROJECT_SET_CHARTOPTIONS, dataArray)
   },
-  getProject: async ({ commit, dispatch }, { projectId }) => {
-    dispatch('initState')
+  getProject: async ({ commit, dispatch, rootState }, { projectId }) => {
     dispatch('setIsLoadingProject', { isLoadingProject: true })
     try {
+      if (!rootState.codelabs.codelabs.length) {
+        dispatch('codelabs/getCodelabs', null, { root: true })
+      }
       const projectBody = await api.getProject({ id: projectId })
       const notesBody = await api.getProjectNotes({ project_id: projectId })
       const milestonesBody = await api.getProjectMilestones({ project_id: projectId })

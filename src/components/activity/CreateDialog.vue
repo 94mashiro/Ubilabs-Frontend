@@ -101,6 +101,9 @@ export default {
     cancelCreate () {
       this.$store.dispatch('activity/setIsCreateDialogVisible', { isCreateDialogVisible: false })
     }
+  },
+  destroyed () {
+    console.log('destroyed')
   }
 }
 </script>

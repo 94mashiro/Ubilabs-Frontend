@@ -5,14 +5,16 @@ const state = {
   isCreateDialogVisible: false,
   codelabs: [],
   codelab: {},
-  isLoadingCodelabsList: false
+  isLoadingCodelabsList: false,
+  selectedCodelab: {}
 }
 
 const getters = {
   isCreateDialogVisible: state => state.isCreateDialogVisible,
   codelabs: state => state.codelabs,
   codelab: state => state.codelab,
-  isLoadingCodelabsList: state => state.isLoadingCodelabsList
+  isLoadingCodelabsList: state => state.isLoadingCodelabsList,
+  selectedCodelab: state => state.selectedCodelab
 }
 
 const actions = {
@@ -35,6 +37,9 @@ const actions = {
   },
   setIsLoadingCodelabsList: ({ commit }, { isLoadingCodelabsList }) => {
     commit(types.CODELABS_SET_ISLOADINGCODELABSLIST, isLoadingCodelabsList)
+  },
+  setSelectedCodelab: ({ commit }, { selectedCodelab }) => {
+    commit(types.CODELABS_SET_SELECTEDCODELAB, selectedCodelab)
   }
 }
 
@@ -47,6 +52,18 @@ const mutations = {
   },
   [types.CODELABS_SET_CODELABS]: (state, codelabs) => {
     state.codelabs = codelabs
+  },
+  [types.CODELABS_SET_SELECTEDCODELAB]: (state, selectedCodelab) => {
+    state.selectedCodelab = selectedCodelab
+  },
+  [types.CODELABS_UPDATE_TITLE]: (state, title) => {
+    state.selectedCodelab.title = title
+  },
+  [types.CODELABS_UPDATE_NODE]: (state, node) => {
+    state.selectedCodelab.node = node
+  },
+  [types.CODELABS_UPDATE_FILE]: (state, file) => {
+    state.selectedCodelab.file = file
   }
 }
 

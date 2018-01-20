@@ -1,11 +1,9 @@
 <template>
 <div class="activity-detail-header-wrapper">
   <div class="header-carousel" v-if="activity.imageUrls.length > 0">
-    <el-carousel trigger="click" width="500px">
-      <el-carousel-item v-for="imageUrl in activity.imageUrls" :key="imageUrl">
-        <div class="carousel-image-hover">
-          <img :src="imageUrl" alt="">
-        </div>
+    <el-carousel trigger="click" type="card">
+      <el-carousel-item v-for="imageUrl in activity.imageUrls" :key="imageUrl" class="carousel-image-hover">
+        <img :src="imageUrl" alt="">
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -44,9 +42,13 @@ export default {
   margin-top: 100px;
 
   .carousel-image-hover {
-    background: #aaa;
     display: flex;
     justify-content: center;
+
+    img {
+      min-height: 100%;
+      max-width: 100%;
+    }
   }
 
   .activity-title {

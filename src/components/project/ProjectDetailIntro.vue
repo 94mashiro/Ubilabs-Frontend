@@ -1,7 +1,7 @@
 <template>
   <div class="project-detail-intro-wrapper">
     <div class="project-carousel" v-if="project.imageUrls.length > 0">
-      <el-carousel>
+      <el-carousel type="card">
         <el-carousel-item v-for="url in project.imageUrls" :key="url" class="project-carousel-wrapper">
           <img :src="url" alt="">
         </el-carousel-item>
@@ -15,7 +15,13 @@
         </el-collapse-item>
         <el-collapse-item name="node">
           <div slot="title" class="collapse-title">选用技术</div>
-          <el-tag v-for="node in this.project.node" :key="node._id" size="small" class="node-tag"><span>{{node.name}}</span></el-tag>
+          <el-tag v-for="node in project.node" :key="node._id" size="small" class="node-tag"><span>{{node.name}}</span></el-tag>
+        </el-collapse-item>
+        <el-collapse-item name="codelab">
+          <div slot="title" class="collapse-title">Codelab</div>
+          <ul>
+            <li v-for="codelab in project.codelab" :key="codelab._id"><a class="codelab-url" target="_blank" :href="getCodelabUrl(codelab)">{{codelab.title}}</a></li>
+          </ul>
         </el-collapse-item>
         <el-collapse-item name="leader">
           <div slot="title" class="collapse-title">项目负责人</div>
@@ -40,6 +46,11 @@ export default {
   components: {
     Avatar
   },
+  methods: {
+    getCodelabUrl: function (codelab) {
+      return `http://localhost:3000/gitbook/${codelab._id}`
+    }
+  },
   computed: {
     ...mapGetters({
       project: 'project/project'
@@ -58,7 +69,7 @@ export default {
   },
   data () {
     return {
-      activeNames: ['title', 'node', 'leader', 'story']
+      activeNames: ['title', 'node', 'leader', 'story', 'codelab']
     }
   }
 }
@@ -72,6 +83,11 @@ export default {
   .project-carousel-wrapper {
     display: flex;
     justify-content: center;
+
+    img {
+      max-height: 100%;
+      max-width: 100%;
+    }
   }
 
   .project-collapse-wrapper {
@@ -79,7 +95,7 @@ export default {
     width: 800px;
     margin: 0 auto;
     span {
-       font-size: 16px;
+       font-size: 14px;
     }
   }
 
@@ -97,7 +113,7 @@ export default {
   }
 
   .project-title, .project-node, .project-leader, .project-story {
-    font-size: 18px;
+    font-size: 14px;
     margin-bottom: 15px;
     color: #333;
   }
@@ -106,6 +122,12 @@ export default {
     font-size: 14px;
     width: 90%;
     margin: 10px auto 0;
+  }
+
+  .codelab-url {
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
   }
 }
 

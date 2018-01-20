@@ -4,6 +4,7 @@
     <div class="card-flex-wrapper">
       <div class="codelab-title">
         <a :href="gitbookUrl" target="_blank">{{title}}</a>
+        <el-button type="text" style="padding: 0" v-if="isLogin && codelab.author._id === profile._id" @click="showModifyDialog">管理</el-button>
       </div>
       <div class="codelab-node">
         <span>{{codelab.node.name}}</span>
@@ -14,6 +15,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'codelabsCard',
   props: ['codelab'],
@@ -23,6 +25,16 @@ export default {
     },
     title: function () {
       return `《${this.codelab.title}》`
+    },
+    ...mapGetters({
+      isLogin: 'status/isLogin',
+      profile: 'user/profile'
+    })
+  },
+  methods: {
+    showModifyDialog: async function () {
+      await this.$store.dispatch('codelabs/setSelectedCodelab', { selectedCodelab: {...this.codelab} })
+      await this.$store.dispatch('codelabs/setIsCreateDialogVisible', { isCreateDialogVisible: true })
     }
   }
 }
@@ -41,12 +53,6 @@ export default {
       text-decoration: none;
       color: #000;
     }
-    // &:before {
-    //   content: "《";
-    // }
-    // &:after {
-    //   content: "》";
-    // }
   }
   .codelab-node {
     span {

@@ -23,9 +23,9 @@
 </template>
 
 <script>
-import ProfileSetting from '@/components/ProfileSetting'
-import UpdatePassword from '@/components/UpdatePassword'
-import UpdateAvatar from '@/components/UpdateAvatar'
+import ProfileSetting from '@/components/setting/ProfileSetting'
+import UpdatePassword from '@/components/setting/UpdatePassword'
+import UpdateAvatar from '@/components/setting/UpdateAvatar'
 import UpdateSshKey from '@/components/setting/UpdateSSHKey'
 export default {
   name: 'setting',
