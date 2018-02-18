@@ -3,7 +3,7 @@
   <project-detail-add-note-dialog v-if="isLogin"></project-detail-add-note-dialog>
   <div class="note-list-header">
     <span>本项目共有 {{project.notes.length}} 篇项目笔记</span>
-    <el-button type="primary" size="mini" icon="el-icon-edit" @click="showDialog" v-if="isLogin">添加笔记</el-button>
+    <el-button type="primary" size="mini" icon="el-icon-edit" @click="showDialog" v-if="isLogin && userInProject">添加笔记</el-button>
   </div>
   <div class="note-list">
     <!-- <div v-for="note in project.notes" :key="note._id" class="list-item">
@@ -37,8 +37,21 @@ export default {
   computed: {
     ...mapGetters({
       isLogin: 'status/isLogin',
-      project: 'project/project'
-    })
+      project: 'project/project',
+      profile: 'user/profile'
+    }),
+    userInProject: function () {
+      if (this.project.leader._id === this.profile._id) {
+        return true
+      } else {
+        for (let idx in this.project.member) {
+          if (this.project.member[idx]._id === this.profile._id) {
+            return true
+          }
+        }
+        return false
+      }
+    }
   },
   methods: {
     showDialog: function () {

@@ -11,7 +11,7 @@
       <span>发布于 {{createDate}}</span>
     </div>
     <div>
-      <el-button type="primary" size="mini" @click="navToEditor">编辑文章</el-button>
+      <el-button type="primary" size="mini" @click="navToEditor" v-if="article.author._id === profile._id">编辑文章</el-button>
     </div>
   </div>
 </div>
@@ -20,6 +20,7 @@
 <script>
 import AuthorInfo from '@/components/forum/AuthorInfo'
 import moment from 'moment'
+import { mapGetters } from 'vuex'
 export default {
   name: 'articleHeader',
   components: {
@@ -29,8 +30,11 @@ export default {
   computed: {
     createDate: function () {
       moment.locale('zh-cn')
-      return moment(this.article.createdAt).startOf('day').fromNow()
-    }
+      return moment(this.article.createdAt).fromNow()
+    },
+    ...mapGetters({
+      profile: 'user/profile'
+    })
   },
   methods: {
     navToEditor: async function () {

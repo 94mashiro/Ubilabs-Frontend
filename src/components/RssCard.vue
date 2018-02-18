@@ -25,7 +25,9 @@
         </div>
       </div>
       <div class="no-rss-wrapper" v-if="!rssList.length">
-        暂无动态
+        <span class="no-rss">
+          暂无动态
+        </span>
       </div>
     </div>
   </el-card>
@@ -78,5 +80,8 @@ export default {
   border-bottom: 1px solid #ebebeb;
   margin-bottom: 8px;
   padding-bottom: 8px;
+}
+.no-rss {
+  font-size: 13px;
 }
 </style>
