@@ -28,11 +28,15 @@
 <script>
 import ImageUploader from '@/components/ImageUploader'
 import { postProject, getNodes } from '@/store/api'
+import { mapGetters } from 'vuex'
 export default {
   name: 'projectCreateDialog',
   components: {
     ImageUploader
   },
+  computed: mapGetters({
+    profile: 'user/profile'
+  }),
   data () {
     return {
       nodeList: [],
@@ -50,6 +54,8 @@ export default {
       this.postBody.imageUrls = this.$store.state.status.uploadImages
       postProject(this.postBody).then(body => {
         if (body.success) {
+          const newProjectCount = this.profile.projectCount + 1
+          this.$store.dispatch('user/setProjectCount', { projectCount: newProjectCount })
           this.$message.success('项目创建成功！')
           this.$store.dispatch('project/setIsCreateDialogVisible', { isCreateDialogVisible: false })
         } else {

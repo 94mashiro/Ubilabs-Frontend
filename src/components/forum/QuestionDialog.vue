@@ -9,7 +9,7 @@
     </el-form-item>
     <el-form-item label="选择话题">
       <el-select v-model="questionForm.node" filterable placeholder="" style="width:100%;">
-        <el-option v-for="node in nodes" :key="node.value" :label="node.label" :value="node.value"></el-option>
+        <el-option v-for="node in questionNodes" :key="node._id" :label="node.name" :value="node._id"></el-option>
       </el-select>
     </el-form-item>
   </el-form>
@@ -37,12 +37,12 @@ export default {
     },
     ...mapGetters({
       displayNode: 'forum/displayNode',
-      questionNodes: 'forum/questionNodes'
+      questionNodes: 'forum/questionNodes',
+      profile: 'user/profile'
     })
   },
   data () {
     return {
-      nodes: [],
       questionForm: {
         title: '',
         content: {
@@ -72,6 +72,8 @@ export default {
       postQuestion(this.questionForm)
         .then((body) => {
           if (body.success) {
+            const newQuestionCount = this.profile.questionCount + 1
+            this.$store.dispatch('user/setQuestionCount', { questionCount: newQuestionCount })
             this.$message.success({
               message: `提问成功`,
               duration: 1500
@@ -90,11 +92,6 @@ export default {
   },
   created () {
     this.configs = markdownEditorConfigs
-  },
-  mounted () {
-    this.nodes = this.questionNodes.map(node => {
-      return { value: node._id, label: node.name }
-    })
   }
 }
 </script>

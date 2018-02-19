@@ -71,6 +71,15 @@ const actions = {
   },
   setFollower: ({ commit }, { follower }) => {
     commit(types.USER_SET_FOLLOWER, follower)
+  },
+  setProjectCount: ({ commit }, { projectCount }) => {
+    commit(types.USER_SET_PROJECTCOUNT, projectCount)
+  },
+  setQuestionCount: ({ commit }, { questionCount }) => {
+    commit(types.USER_SET_QUESTIONCOUNT, questionCount)
+  },
+  setArticleCount: ({ commit }, { articleCount }) => {
+    commit(types.USER_SET_ARTICLECOUNT, articleCount)
   }
 }
 
@@ -83,6 +92,15 @@ const mutations = {
   },
   [types.USER_SET_FOLLOWER]: (state, follower) => {
     state.profile.follower = follower
+  },
+  [types.USER_SET_PROJECTCOUNT]: (state, projectCount) => {
+    state.profile.projectCount = projectCount
+  },
+  [types.USER_SET_QUESTIONCOUNT]: (state, questionCount) => {
+    state.profile.questionCount = questionCount
+  },
+  [types.USER_SET_ARTICLECOUNT]: (state, articleCount) => {
+    state.profile.articleCount = articleCount
   }
 }
 

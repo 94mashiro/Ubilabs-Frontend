@@ -35,7 +35,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      selectedArticle: 'article/selectedArticle'
+      selectedArticle: 'article/selectedArticle',
+      profile: 'user/profile'
     }),
     'selectedArticle.title': {
       get: function () {
@@ -71,7 +72,6 @@ export default {
   },
   methods: {
     handleUploadSuccess: function (res, file, fileList) {
-      // console.log(res, file, fileList)
       $('.editor-picture-uploader').css('background', `url("${res.url}") no-repeat center`)
       $('.el-upload__text').text('点击更换题图')
       this.editorForm.imageUrl = res.url
@@ -80,6 +80,8 @@ export default {
       postArticle(this.editorForm)
         .then((body) => {
           if (body.success) {
+            const newArticleCount = this.profile.articleCount + 1
+            this.$store.dispatch('user/setArticleCount', { articleCount: newArticleCount })
             this.$message.success({
               message: '发表成功',
               duration: 1500
@@ -105,14 +107,10 @@ export default {
       } catch (err) {
         this.$notify.error(err)
       }
-    },
-    deleteImage: function () {
-      console.log('delete it')
     }
   },
   created () {
     this.configs = markdownEditorConfigs
-    console.log(this.selectedArticle)
   },
   destroyed () {
     this.$store.dispatch('article/setSelectedArticle', { selectedArticle: {} })
