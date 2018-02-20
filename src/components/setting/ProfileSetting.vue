@@ -14,8 +14,8 @@
     <el-form-item label="个人描述">
       <el-input v-model="settings.description" placeholder="" type="textarea" :autosize="{ minRows: 4, maxRows: 4 }" resize="none"></el-input>
     </el-form-item>
-    <el-form-item label="头像链接">
-      <el-input v-model="settings.avatar" placeholder=""></el-input>
+    <el-form-item label="修改头像">
+      <image-uploader :limit="1"/>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm">提交</el-button>
@@ -27,10 +27,15 @@
 <script>
 import { mapGetters } from 'vuex'
 import { updateProfile } from '@/store/api'
+import ImageUploader from '../ImageUploader'
 export default {
   name: 'profileSetting',
+  components: {
+    ImageUploader
+  },
   computed: mapGetters({
-    profile: 'user/profile'
+    profile: 'user/profile',
+    uploadImages: 'status/uploadImages'
   }),
   data () {
     return {
@@ -51,6 +56,9 @@ export default {
   },
   methods: {
     submitForm () {
+      if (this.uploadImages.length) {
+        this.settings.avatar = this.uploadImages[0]
+      }
       updateProfile(this.settings)
         .then((body) => {
           if (body.success) {

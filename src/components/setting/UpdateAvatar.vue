@@ -1,19 +1,16 @@
 <template>
 <div class="setting-form">
-  <el-upload
-    class="avatar-uploader"
-    action=""
-    :show-file-list="false"
-  >
-    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-  </el-upload>
+  <image-uploader/>
 </div>
 </template>
 
 <script>
+import ImageUploader from '../ImageUploader'
 export default {
   name: 'updateAvatar',
+  components: {
+    ImageUploader
+  },
   data () {
     return {
       imageUrl: ''
