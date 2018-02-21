@@ -11,9 +11,6 @@
       <el-tab-pane label="密码修改">
         <update-password></update-password>
       </el-tab-pane>
-      <el-tab-pane label="头像修改">
-        <update-avatar></update-avatar>
-      </el-tab-pane>
       <el-tab-pane label="SSH Key">
         <update-ssh-key></update-ssh-key>
       </el-tab-pane>
@@ -25,14 +22,12 @@
 <script>
 import ProfileSetting from '@/components/setting/ProfileSetting'
 import UpdatePassword from '@/components/setting/UpdatePassword'
-import UpdateAvatar from '@/components/setting/UpdateAvatar'
 import UpdateSshKey from '@/components/setting/UpdateSSHKey'
 export default {
   name: 'setting',
   components: {
     ProfileSetting,
     UpdatePassword,
-    UpdateAvatar,
     UpdateSshKey
   }
 }

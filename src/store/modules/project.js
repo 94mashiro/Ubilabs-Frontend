@@ -95,10 +95,10 @@ const actions = {
   setIsLoadingProject: ({ commit }, { isLoadingProject }) => {
     commit(types.PROJECT_SET_ISLOADINGPROJECT, isLoadingProject)
   },
-  getProjects: async ({ commit, dispatch }) => {
+  getProjects: async ({ commit, dispatch }, { page }) => {
     try {
       dispatch('setIsLoadingProjectList', { isLoadingProjectList: true })
-      const body = await api.getProject()
+      const body = await api.getProject({ page })
       if (body.success) {
         commit(types.PROJECT_SET_PROJECTS, body.result)
       } else {

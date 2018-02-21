@@ -20,8 +20,8 @@ export default {
     ProjectCard
   },
   methods: {
-    changePage: function () {
-      console.log('cp')
+    changePage: function (page) {
+      this.$store.dispatch('project/getProjects', { page })
     }
   }
 }

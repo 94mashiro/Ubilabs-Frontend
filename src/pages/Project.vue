@@ -51,7 +51,7 @@ export default {
     })
   },
   created () {
-    this.$store.dispatch('project/getProjects')
+    this.$store.dispatch('project/getProjects', { page: 1 })
   }
 }
 </script>
