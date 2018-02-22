@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Store from '@/store'
 
+import * as api from '../store/api'
+
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Setting from '@/pages/Setting'
@@ -104,21 +106,21 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   window.scrollTo(0, 0)
   if (to.matched.some(record => record.meta.shouldNotLogin)) {
-    if (Store.state.status.isLogin) {
+    api.getUserProfile().then(() => {
       next({
         path: '/'
       })
-    } else {
+    }).catch(() => {
       next()
-    }
+    })
   } else if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!Store.state.status.isLogin) {
+    api.getUserProfile().then(() => {
+      next()
+    }).catch(() => {
       next({
         path: '/login'
       })
-    } else {
-      next()
-    }
+    })
   } else if (to.matched.some(record => record.meta.isWhiteBackground)) {
     if (Store.state.status.isArticleStyle === false) {
       Store.dispatch('status/setIsArticleStyle', {isArticleStyle: true})

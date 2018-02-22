@@ -10,7 +10,7 @@
     </div>
     <div class="question-header-toolbar" v-if="!isAnswered">
       <el-button type="primary" size="small" plain @click="displayEditor"><icon class="icon" name="brush" :scale="1.8"></icon>写回答</el-button>
-      <el-button type="plain" size="small" plain @click="displayDialog" v-if="profile._id === question.author._id"><icon class="icon" name="brush" :scale="1.8"></icon>修改问题</el-button>
+      <el-button type="plain" size="small" plain @click="displayDialog" v-if="isLogin && profile._id === question.author._id"><icon class="icon" name="brush" :scale="1.8"></icon>修改问题</el-button>
     </div>
   </div>
 </el-container>
@@ -29,11 +29,13 @@ export default {
   computed: mapGetters({
     isAnswered: 'question/isAnswered',
     question: 'question/question',
-    profile: 'user/profile'
+    profile: 'user/profile',
+    isLogin: 'status/isLogin'
   }),
   methods: {
     displayEditor: async function () {
-      if (!this.profile) {
+      if (!this.isLogin) {
+        this.$notify.error('请先登录。')
         this.$router.push('/login')
       } else {
         await this.$store.dispatch('question/setIsShowEditor', {isShowEditor: true})
