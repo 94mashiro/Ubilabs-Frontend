@@ -130,7 +130,7 @@ export default {
         if (body.success) {
           this.$notify.success('创建成功')
           this.$store.dispatch('codelabs/setIsCreateDialogVisible', { isCreateDialogVisible: false })
-          this.$store.dispatch('codelabs/getCodelabs')
+          this.$store.dispatch('codelabs/getCodelabs', {page: 1})
         }
       })
     },
@@ -148,7 +148,7 @@ export default {
         } else {
           this.$notify.success('编辑成功。')
           this.$store.dispatch('codelabs/setIsCreateDialogVisible', { isCreateDialogVisible: false })
-          this.$store.dispatch('codelabs/getCodelabs')
+          this.$store.dispatch('codelabs/getCodelabs', {page: 1})
         }
       } catch (err) {
         this.$notify.error(err)

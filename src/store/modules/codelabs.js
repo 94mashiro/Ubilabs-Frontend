@@ -21,9 +21,9 @@ const actions = {
   setIsCreateDialogVisible: ({ commit }, { isCreateDialogVisible }) => {
     commit(types.CODELABS_SET_ISCREATEDIALOGVISIBLE, isCreateDialogVisible)
   },
-  getCodelabs: ({ commit, dispatch }, { page }) => {
+  getCodelabs: ({ commit, dispatch }, params) => {
     dispatch('setIsLoadingCodelabsList', { isLoadingCodelabsList: true })
-    api.getCodelabs({ page }).then(body => {
+    api.getCodelabs(params).then(body => {
       if (body.success) {
         commit(types.CODELABS_SET_CODELABS, body.result)
       } else {

@@ -46,7 +46,7 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('codelabs/getCodelabs', {page: 1})
+    this.$store.dispatch('codelabs/getCodelabs', { paginate: true, page: 1 })
   }
 }
 </script>

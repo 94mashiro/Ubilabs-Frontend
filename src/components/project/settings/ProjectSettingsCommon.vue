@@ -18,7 +18,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="项目故事版">
-      <markdown-editor v-model="postBody.story.md" :configs="configs" class="markdown-editor"></markdown-editor>
+      <markdown-editor v-model="postBody.story.md" :configs="configs" class="markdown-editor" ref="editor"></markdown-editor>
     </el-form-item>
     <el-form-item label="">
       <el-button type="primary" icon="el-icon-setting" @click="submitForm">保存</el-button>
@@ -57,6 +57,7 @@ export default {
           throw body.message
         } else {
           this.$message.success('项目资料修改成功。')
+          this.$store.dispatch('project/getProject', {projectId: this.$route.params.id})
         }
       } catch (err) {
         this.$message.error(err.message || err)
@@ -76,7 +77,6 @@ export default {
     this.postBody.codelab = project.codelab.map(codelab => {
       return codelab._id
     })
-
     try {
       const body = await getNodes()
       if (!body.success) {

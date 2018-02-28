@@ -19,7 +19,7 @@ export default {
   props: ['list'],
   methods: {
     changePage: function (page) {
-      this.$store.dispatch('codelabs/getCodelabs', { page })
+      this.$store.dispatch('codelabs/getCodelabs', { paginate: true, page })
     }
   }
 }
