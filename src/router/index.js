@@ -100,11 +100,13 @@ const routes = [
 
 const router = new Router({
   routes,
-  mode: 'history'
+  mode: 'history',
+  scrollBehavior: (to, from, savedPosition) => {
+    return { x: 0, y: 0 }
+  }
 })
 
 router.beforeEach((to, from, next) => {
-  window.scrollTo(0, 0)
   if (to.matched.some(record => record.meta.shouldNotLogin)) {
     api.getUserProfile().then(() => {
       next({
