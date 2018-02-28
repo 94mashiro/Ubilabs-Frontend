@@ -4,7 +4,9 @@
       <Navigation></Navigation>
     </el-header>
     <el-main class="container">
-      <router-view/>
+      <transition name="route-fade" mode="out-in">
+        <router-view/>
+      </transition>
     </el-main>
     <el-footer class="footer" height="40px">
       <h2>Powered By Keystone & Vue.js With Love</h2>
@@ -84,5 +86,13 @@ body {
     color: #aaaaaa;
     font-size: 12px;
   }
+}
+
+.route-fade-enter-active, .route-fade-leave-active {
+  transition: opacity .3s ease;
+}
+.route-fade-enter, .route-fade-leave-to
+/* .component-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
