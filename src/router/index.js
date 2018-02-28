@@ -4,19 +4,19 @@ import Store from '@/store'
 
 import * as api from '../store/api'
 
-import Login from '@/pages/Login'
-import Register from '@/pages/Register'
-import Setting from '@/pages/Setting'
-import Forum from '@/pages/Forum'
-import ForumEditor from '@/pages/ForumEditor'
-import Article from '@/pages/Article'
-import Question from '@/pages/Question'
-import Activity from '@/pages/Activity'
-import ActivityDetail from '@/pages/ActivityDetail'
-import Codelabs from '@/pages/Codelabs'
-import Project from '@/pages/Project'
-import ProjectDetail from '@/pages/ProjectDetail'
-import Profile from '@/pages/Profile'
+const Login = () => import('@/pages/Login')
+const Register = () => import('@/pages/Register')
+const Setting = () => import('@/pages/Setting')
+const Forum = () => import('@/pages/Forum')
+const ForumEditor = () => import('@/pages/ForumEditor')
+const Article = () => import('@/pages/Article')
+const Question = () => import('@/pages/Question')
+const Activity = () => import('@/pages/Activity')
+const ActivityDetail = () => import('@/pages/ActivityDetail')
+const Codelabs = () => import('@/pages/Codelabs')
+const Project = () => import('@/pages/Project')
+const ProjectDetail = () => import('@/pages/ProjectDetail')
+const Profile = () => import('@/pages/Profile')
 
 Vue.use(Router)
 
