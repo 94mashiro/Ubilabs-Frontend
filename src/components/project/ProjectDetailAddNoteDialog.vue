@@ -68,6 +68,7 @@ export default {
       this.$router.push('/forum/editor')
     },
     checkMilestone: function (milestoneId) {
+      if (!milestoneId) return
       const milestone = this.project.milestones.filter(ms => ms._id === milestoneId)[0]
       if (!milestone.isFinished) {
         const postBody = {

@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     getFiles: function () {
-      return axios.get(`http://localhost:32774/api/v4/projects/${this.repoId}/repository/tree?path=${this.path}`)
+      return axios.get(`http://gitlab.mashiro.wang/api/v4/projects/${this.repoId}/repository/tree?path=${this.path}`)
         .then(res => {
           this.files = res.data
         })
@@ -63,7 +63,7 @@ export default {
       this.getFiles()
     },
     getDownloadPath: function (path) {
-      return `http://localhost:32774/api/v4/projects/${this.repoId}/repository/files/${encodeURIComponent(path)}/raw?ref=master`
+      return `http://gitlab.mashiro.wang/api/v4/projects/${this.repoId}/repository/files/${encodeURIComponent(path)}/raw?ref=master`
     }
   },
   watch: {

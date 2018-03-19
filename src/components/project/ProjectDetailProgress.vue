@@ -33,7 +33,7 @@
           </el-table-column>
           <el-table-column label="实际完成日期" width="160">
             <template slot-scope="scope">
-              <span>{{getI18nDate(scope.row.finishDate)}}</span>
+              <span>{{scope.row.isFinished ? getI18nDate(scope.row.finishDate) : '暂未完成'}}</span>
             </template>
           </el-table-column>
         </el-table>

@@ -36,7 +36,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   width: 80%;
-  margin: 25px auto;
+  margin: 75px auto;
 
   h2 {
     font-size: 24px;

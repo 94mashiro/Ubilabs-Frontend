@@ -1,6 +1,9 @@
 <template>
 <div class="codelabs-list-wrapper">
-  <div class="list-item" v-for="codelab in list.results" :key="codelab._id">
+  <el-card v-if="!list || !list.results.length">
+    暂无数据
+  </el-card>
+  <div class="list-item" v-for="codelab in list.results" :key="codelab._id" v-if="list && list.results.length">
     <codelabs-card :codelab="codelab"></codelabs-card>
   </div>
   <el-card :body-style="{padding: 0}" class="list-pagination">

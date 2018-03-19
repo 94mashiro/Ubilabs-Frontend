@@ -1,13 +1,16 @@
 <template>
 <div class="project-cardlist-wrapper">
-<div class="list-item" v-for="project in list.results" :key="project._id">
-  <project-card :project="project"></project-card>
-</div>
-<div class="list-pagination">
-  <el-card :body-style="{padding: 0}">
-    <el-pagination layout="prev, pager, next" :total="list.total" @current-change="changePage"></el-pagination>
+  <el-card v-if="!list || !list.results.length">
+    暂无数据
   </el-card>
-</div>
+  <div class="list-item" v-for="project in list.results" :key="project._id" v-if="list && list.results.length">
+    <project-card :project="project"></project-card>
+  </div>
+  <div class="list-pagination">
+    <el-card :body-style="{padding: 0}">
+      <el-pagination layout="prev, pager, next" :total="list.total" @current-change="changePage"></el-pagination>
+    </el-card>
+  </div>
 </div>
 </template>
 
@@ -28,6 +31,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.list-pagination {
+  margin-top: 20px;
+}
 </style>
 

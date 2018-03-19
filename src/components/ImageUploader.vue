@@ -2,7 +2,7 @@
 <div class="picture-uploader-wrapper">
   <el-upload :limit="limit || 99" :action="postUrl" :name="postName" :accept="acceptType" :on-remove="handleRemove" :on-success="handleSuccess">
     <el-button slot="trigger" type="success" plain size="mini">选择文件</el-button>
-    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+    <div slot="tip" class="el-upload__tip">只能上传 jpg/png 文件</div>
   </el-upload>
 </div>
 </template>
@@ -14,7 +14,7 @@ export default {
   data () {
     return {
       acceptType: 'image/jpeg,image/png',
-      postUrl: '/imageupload/backend.php',
+      postUrl: 'http://pic.mashiro.wang/backend.php',
       postName: 'postimage'
     }
   },

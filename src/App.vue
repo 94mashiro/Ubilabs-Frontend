@@ -56,7 +56,7 @@ body {
 }
 
 .container {
-  padding: 0px;
+  padding: 0px !important;
   flex: 1;
 }
 

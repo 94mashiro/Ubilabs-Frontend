@@ -208,7 +208,7 @@ export const getProject = (params) => {
 
 export const updateSSHKey = (token, body) => {
   return axios.post(
-    'http://localhost:32774/api/v4/user/keys',
+    'http://gitlab.mashiro.wang/api/v4/user/keys',
     body,
     {
       headers: { 'PRIVATE-TOKEN': token },

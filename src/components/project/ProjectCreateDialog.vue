@@ -58,6 +58,7 @@ export default {
           this.$store.dispatch('user/setProjectCount', { projectCount: newProjectCount })
           this.$message.success('项目创建成功！')
           this.$store.dispatch('project/setIsCreateDialogVisible', { isCreateDialogVisible: false })
+          this.$store.dispatch('project/getProjects', { page: 1 })
         } else {
           this.$message.error(body.message)
           console.error(body.message)

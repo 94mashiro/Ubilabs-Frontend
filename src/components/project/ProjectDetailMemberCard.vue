@@ -21,39 +21,45 @@ export default {
     }),
     notes: function () {
       return this.project.notes.filter(note => note.author._id === this.member._id)
-    },
-    chartData: function () {
-      const table = {}
-      const array = []
-      this.notes.forEach(note => {
-        const countDate = new Date(note.createdAt)
-        const date = `${countDate.getFullYear()}-${countDate.getMonth() + 1}-${countDate.getDate()}`
-        if (!table[date]) {
-          const insideObj = {
-            date: new Date(date),
-            count: 1
+    }
+  },
+  methods: {
+    updateChart: function () {
+      if (this.project) {
+        const table = {}
+        const array = []
+        this.notes.forEach(note => {
+          const countDate = new Date(note.createdAt)
+          const date = `${countDate.getFullYear()}-${countDate.getMonth() + 1}-${countDate.getDate()}`
+          if (!table[date]) {
+            const insideObj = {
+              date: new Date(date),
+              count: 1
+            }
+            table[date] = insideObj
+          } else {
+            table[date].count ++
           }
-          table[date] = insideObj
-        } else {
-          table[date].count ++
+        })
+        for (let key in table) {
+          array.push(table[key])
         }
-      })
-      for (let key in table) {
-        array.push(table[key])
+        console.log(array)
+        const chart = CalendarHeatMap()
+                .data(array || [])
+                .selector(`#chart-${this.member._id.substring(0, 8)}`)
+                .colorRange(['#EBEDF0', '#1D602A'])
+                .tooltipEnabled(true)
+                .legendEnabled(false)
+        chart()
       }
-      return array
     }
   },
   mounted () {
-    if (this.chartData) {
-      const chart = CalendarHeatMap()
-              .data(this.chartData)
-              .selector(`#chart-${this.member._id.substring(0, 8)}`)
-              .colorRange(['#EBEDF0', '#1D602A'])
-              .tooltipEnabled(true)
-              .legendEnabled(false)
-      chart()
-    }
+    this.updateChart()
+  },
+  updated () {
+    this.updateChart()
   }
 }
 </script>
