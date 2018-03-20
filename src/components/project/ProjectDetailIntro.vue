@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     getCodelabUrl: function (codelab) {
-      return `http://localhost:3000/gitbook/${codelab._id}`
+      return `http://bs.mashiro.wang:3000/gitbook/${codelab._id}`
     }
   },
   computed: {

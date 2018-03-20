@@ -21,7 +21,7 @@ export default {
   props: ['codelab'],
   computed: {
     gitbookUrl: function () {
-      return `http://localhost:3000/gitbook/${this.codelab._id}`
+      return `http://bs.mashiro.wang:3000/gitbook/${this.codelab._id}`
     },
     title: function () {
       return `《${this.codelab.title}》`

@@ -45,7 +45,7 @@ export default {
       if (key === 'logout') {
         this.logout()
       } else if (key === 'admin') {
-        window.location.href = 'http://localhost:3000/keystone'
+        window.location.href = 'http://bs.mashiro.wang:3000/keystone'
       } else {
         this.$router.replace(`/${key}`)
         this.activePath = location.pathname.split('/')[1]
